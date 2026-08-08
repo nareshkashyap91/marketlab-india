@@ -139,13 +139,11 @@ def calculate_rsi(data, period=14):
     ],
     relatedArticles: [
       { title: "RSI Divergence: Bullish vs Bearish Patterns", slug: "rsi-divergence-patterns" },
-      { title: "Moving Average Crossovers (EMA vs SMA)", slug: "moving-average-crossovers-guide" },
-      { title: "Python for Technical Analysis: Vectorized Indicators", slug: "python-technical-analysis-vectorized" }
+      { title: "Moving Average Crossovers (EMA vs SMA)", slug: "moving-average-crossovers-guide" }
     ],
     relatedTools: [
       { name: "RSI Calculator", slug: "rsi-calculator" },
-      { name: "EMA Calculator", slug: "ema-calculator" },
-      { name: "Trading Journal", slug: "trading-journal" }
+      { name: "EMA Calculator", slug: "ema-calculator" }
     ],
     sources: [
       "Wilder, J. Welles. New Concepts in Technical Trading Systems. Trend Research, 1978.",
@@ -154,7 +152,138 @@ def calculate_rsi(data, period=14):
     youtubeVideoId: "dQw4w9WgXcQ"
   },
 
-  // 2. OPTIONS EDUCATION ARTICLE
+  // 2. NEW ARTICLE: OPTIONS DELTA & THETA MECHANICS
+  {
+    slug: "options-delta-and-theta-mechanics-guide",
+    title: "Options Delta & Theta Mechanics: Price Sensitivity & Time Decay Explained",
+    category: "Options Education",
+    categorySlug: "options-education",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "14 min read",
+    shortAnswer: "Options Delta measures the expected change in option premium per ₹1 movement in underlying stock index price, while Theta quantifies daily non-linear time decay loss. Understanding Delta and Theta is vital for risk-managing derivatives portfolios in Nifty 50 and BankNifty options.",
+    contentHtml: `
+      <h2>1. Introduction to Derivatives Greeks</h2>
+      <p>Option contracts do not trade in a simple linear ratio like shares. Their market price (premium) is determined by the Black-Scholes partial differential equation based on underlying spot price, strike price, time until expiration, implied volatility, and risk-free interest rates. The core sensitivity metrics derived from this model are <strong>The Options Greeks</strong>.</p>
+
+      <h2>2. Options Delta (\(\\Delta\)): Directional Sensitivity</h2>
+      <p><strong>Delta</strong> measures the change in option premium for a ₹1 change in the underlying asset price:</p>
+      
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">Delta (\\Delta) = \\frac{\\partial V}{\\partial S}</p>
+        <p class="font-mono text-emerald-400 mt-2">Expected Premium Change = Delta \\times \\Delta Spot</p>
+      </div>
+
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Call Options (CE):</strong> Positive Delta ranging from 0 to +1.0. An At-The-Money (ATM) Call has a Delta of approximately +0.50. If Nifty rises by 10 points, an ATM Call premium rises by ~₹5.</li>
+        <li><strong>Put Options (PE):</strong> Negative Delta ranging from 0 to -1.0. An At-The-Money (ATM) Put has a Delta of approximately -0.50. If Nifty rises by 10 points, an ATM Put premium drops by ~₹5.</li>
+        <li><strong>Delta as Probability Proxy:</strong> In quantitative option models, Delta is frequently used as an approximate statistical probability that the option will expire In-The-Money (ITM).</li>
+      </ul>
+
+      <h2>3. Options Theta (\(\\Theta\)): The Non-Linear Time Decay Curve</h2>
+      <p><strong>Theta</strong> represents the monetary loss in an option contract's extrinsic value per day due to the passage of time:</p>
+
+      <div class="math-card p-4 my-4 rounded font-mono text-amber-400">
+        Theta (\\Theta) = \\frac{\\partial V}{\\partial t}
+      </div>
+
+      <p>Options are wasting assets. Time decay does not occur linearly — it follows a square-root curve. Extrinsic time value decays gradually when expiration is 60+ days away, but accelerates non-linearly during the final 30 days before expiry.</p>
+
+      <h2>4. Comparative Options Greeks Matrix (Nifty 50 Example)</h2>
+      <table class="w-full text-left my-4 border-collapse border border-slate-800 text-xs">
+        <thead>
+          <tr class="bg-slate-900 text-amber-400">
+            <th class="p-3 border border-slate-800">Option Moneyness</th>
+            <th class="p-3 border border-slate-800">Call Delta (\(\\Delta\))</th>
+            <th class="p-3 border border-slate-800">Put Delta (\(\\Delta\))</th>
+            <th class="p-3 border border-slate-800">Theta Decay Speed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">Deep ITM (In-The-Money)</td>
+            <td class="p-3 border border-slate-800">0.80 to 0.95</td>
+            <td class="p-3 border border-slate-800">-0.80 to -0.95</td>
+            <td class="p-3 border border-slate-800">Low (Mostly Intrinsic Value)</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-cyan-400">ATM (At-The-Money)</td>
+            <td class="p-3 border border-slate-800">~ 0.50</td>
+            <td class="p-3 border border-slate-800">~ -0.50</td>
+            <td class="p-3 border border-slate-800 text-rose-400 font-bold">Maximum Daily Theta Decay</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-slate-400">OTM (Out-of-The-Money)</td>
+            <td class="p-3 border border-slate-800">0.05 to 0.30</td>
+            <td class="p-3 border border-slate-800">-0.05 to -0.30</td>
+            <td class="p-3 border border-slate-800">High relative to small premium</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>5. Common Mistakes in Options Buying & Selling</h2>
+      <div class="bg-slate-900 border-l-4 border-rose-500 p-4 my-4 rounded">
+        <h4 class="text-rose-400 font-bold mb-1">Critical Educational Risk Warning:</h4>
+        <p>1. <strong>Holding OTM Long Options Across Expiry Week:</strong> Buying far Out-of-the-Money (OTM) options because premiums look cheap (e.g. ₹5 or ₹10) is a frequent retail trap. OTM options have low Delta (~0.10) and high relative Theta decay, causing rapid total loss of premium if spot price does not make an extreme move.</p>
+        <p class="mt-2">2. <strong>Ignoring Expiry Day Accelerated Theta:</strong> On weekly expiry days (Thursdays for Nifty 50), Theta decay reaches maximum velocity as time value shrinks to zero by 3:30 PM.</p>
+      </div>
+
+      <h2>6. Python Script: Calculating Option Delta & Theta via SciPy</h2>
+      <pre><code>import math
+from scipy.stats import norm
+
+def black_scholes_greeks(S, K, T, r, sigma, option_type='call'):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    
+    if option_type == 'call':
+        delta = norm.cdf(d1)
+        theta = (- (S * norm.pdf(d1) * sigma) / (2 * math.sqrt(T)) 
+                 - r * K * math.exp(-r * T) * norm.cdf(d2)) / 365
+    else:
+        delta = norm.cdf(d1) - 1
+        theta = (- (S * norm.pdf(d1) * sigma) / (2 * math.sqrt(T)) 
+                 + r * K * math.exp(-r * T) * norm.cdf(-d2)) / 365
+        
+    return {'delta': round(delta, 4), 'theta_per_day': round(theta, 4)}
+
+# Example: Nifty Spot = 24000, Strike = 24000, 7 Days to Expiry (7/365), Volatility = 15% (0.15)
+greeks = black_scholes_greeks(24000, 24000, 7/365, 0.07, 0.15, 'call')
+print("ATM Call Delta:", greeks['delta'])
+print("ATM Daily Theta Decay (₹):", greeks['theta_per_day'])
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "What is an At-The-Money (ATM) option Delta?",
+        answer: "At-The-Money Call options generally have a Delta of approximately +0.50, while ATM Put options have a Delta of approximately -0.50."
+      },
+      {
+        question: "Why does Theta decay accelerate as expiry approaches?",
+        answer: "Option time value is non-linear and proportional to the square root of remaining time. As days to expiry drop towards zero, extrinsic value collapses rapidly."
+      },
+      {
+        question: "How does Delta relate to Gamma?",
+        answer: "Gamma measures the rate of change of Delta per ₹1 move in underlying price. High Gamma means Delta shifts rapidly."
+      }
+    ],
+    relatedArticles: [
+      { title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained", slug: "understanding-options-greeks-delta-theta-vega" },
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "Black, Fischer, and Myron Scholes. The Pricing of Options and Corporate Liabilities. Journal of Political Economy, 1973.",
+      "Natenberg, Sheldon. Option Volatility and Pricing. McGraw-Hill, 2014."
+    ]
+  },
+
+  // 3. OPTIONS GREEKS OVERVIEW ARTICLE
   {
     slug: "understanding-options-greeks-delta-theta-vega",
     title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained",
@@ -227,7 +356,7 @@ def calculate_rsi(data, period=14):
     ],
     relatedArticles: [
       { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" },
-      { title: "Python for Options Backtesting", slug: "python-options-backtesting-guide" }
+      { title: "Options Delta & Theta Mechanics", slug: "options-delta-and-theta-mechanics-guide" }
     ],
     relatedTools: [
       { name: "Option Payoff Calculator", slug: "option-payoff-calculator" },
@@ -239,7 +368,7 @@ def calculate_rsi(data, period=14):
     ]
   },
 
-  // 3. FUNDAMENTAL ANALYSIS ARTICLE
+  // 4. FUNDAMENTAL ANALYSIS ARTICLE
   {
     slug: "demystifying-price-to-earnings-pe-ratio",
     title: "Demystifying P/E Ratio: How to Evaluate Valuation Metrics in Indian Stocks",
