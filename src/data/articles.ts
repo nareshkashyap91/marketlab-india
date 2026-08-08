@@ -152,7 +152,148 @@ def calculate_rsi(data, period=14):
     youtubeVideoId: "dQw4w9WgXcQ"
   },
 
-  // 2. NEW ARTICLE: OPTIONS DELTA & THETA MECHANICS
+  // 2. NEW ARTICLE: SIP COMPOUNDING MATRIX
+  {
+    slug: "sip-compounding-matrix-and-wealth-projection-guide",
+    title: "SIP Compounding Matrix: How Monthly SIPs Multiply Long-Term Wealth",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "11 min read",
+    shortAnswer: "A Systematic Investment Plan (SIP) uses monthly compound interest mathematics and rupee-cost averaging to build long-term wealth. The SIP Compounding Matrix proves how time duration exponentially dominates investment size over 10 to 30 years.",
+    contentHtml: `
+      <h2>1. The Mathematics of SIP Compounding</h2>
+      <p>A <strong>Systematic Investment Plan (SIP)</strong> allows investors to deploy a fixed sum of money into equity mutual funds or index funds at regular monthly intervals. Unlike a lump-sum deposit, each SIP instalment compounds for a different duration.</p>
+      <p>The Future Value (\(FV\)) of an annuity-due SIP formula is expressed mathematically as:</p>
+      
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">FV = P \\times \\left[ \\frac{(1 + i)^n - 1}{i} \\right] \\times (1 + i)</p>
+        <p class="font-mono text-emerald-400 mt-2">where P = Monthly SIP, i = Expected Monthly Rate (CAGR / 12), n = Total Months</p>
+      </div>
+
+      <h2>2. The Definitive SIP Compounding Matrix (12% Expected CAGR)</h2>
+      <p>The matrix below demonstrates the total wealth created (Invested Amount vs. Projected Corpus) across different monthly investment levels and time horizons assuming a realistic 12% annual compounding rate (Nifty 50 historical benchmark average):</p>
+
+      <table class="w-full text-left my-4 border-collapse border border-slate-800 text-xs">
+        <thead>
+          <tr class="bg-slate-900 text-cyan-400">
+            <th class="p-3 border border-slate-800">Monthly SIP</th>
+            <th class="p-3 border border-slate-800">10 Years</th>
+            <th class="p-3 border border-slate-800">15 Years</th>
+            <th class="p-3 border border-slate-800">20 Years</th>
+            <th class="p-3 border border-slate-800">25 Years</th>
+            <th class="p-3 border border-slate-800">30 Years</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹5,000 / mo</td>
+            <td class="p-3 border border-slate-800">₹11.6 Lacs</td>
+            <td class="p-3 border border-slate-800">₹25.2 Lacs</td>
+            <td class="p-3 border border-slate-800">₹49.9 Lacs</td>
+            <td class="p-3 border border-slate-800">₹94.9 Lacs</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹1.76 Crore</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹10,000 / mo</td>
+            <td class="p-3 border border-slate-800">₹23.2 Lacs</td>
+            <td class="p-3 border border-slate-800">₹50.5 Lacs</td>
+            <td class="p-3 border border-slate-800">₹99.9 Lacs</td>
+            <td class="p-3 border border-slate-800 text-emerald-400">₹1.90 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹3.53 Crore</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹25,000 / mo</td>
+            <td class="p-3 border border-slate-800">₹58.1 Lacs</td>
+            <td class="p-3 border border-slate-800">₹1.26 Crore</td>
+            <td class="p-3 border border-slate-800">₹2.50 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹4.74 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹8.82 Crore</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹50,000 / mo</td>
+            <td class="p-3 border border-slate-800">₹1.16 Crore</td>
+            <td class="p-3 border border-slate-800">₹2.52 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹4.99 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹9.49 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹17.65 Crore</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. The Cost of Delay: Why Starting 5 Years Early Matters</h2>
+      <p>Compounding power builds disproportionately in the final decade. Delaying a ₹10,000 monthly SIP start date by just 5 years results in a massive wealth gap at age 60:</p>
+
+      <div class="bg-slate-900 border-l-4 border-amber-500 p-4 my-4 rounded">
+        <h4 class="text-amber-400 font-bold mb-1">Comparative Cost of Delay Example:</h4>
+        <p>• <strong>Investor A (Starts at Age 25):</strong> Invests ₹10,000/month for 35 Years @ 12% CAGR. Total Invested = ₹42 Lacs. <strong>Final Wealth = ₹6.49 Crore.</strong></p>
+        <p class="mt-2">• <strong>Investor B (Starts at Age 30):</strong> Invests ₹10,000/month for 30 Years @ 12% CAGR. Total Invested = ₹36 Lacs. <strong>Final Wealth = ₹3.53 Crore.</strong></p>
+        <p class="mt-2 text-cyan-400"><strong>Wealth Penalty for 5-Year Delay: ₹2.96 Crore Loss!</strong> (Investor B sacrificed ₹2.96 Crore wealth to save just ₹6 Lacs in contributions).</p>
+      </div>
+
+      <h2>4. Step-Up SIP: The Wealth Accelerator</h2>
+      <p>A <strong>Step-Up SIP</strong> automatically increases your monthly investment by a fixed percentage (e.g. 10% annual increment) to align with annual salary hikes. A ₹10,000 SIP stepped up by 10% yearly produces nearly <strong>double the corpus</strong> of a flat SIP over 20 years!</p>
+
+      <h2>5. Python Script: Simulating SIP Compounding Schedules</h2>
+      <pre><code>def calculate_sip_corpus(monthly_investment, annual_rate_pct, years, step_up_pct=0):
+    total_months = years * 12
+    monthly_rate = (annual_rate_pct / 100) / 12
+    corpus = 0
+    total_invested = 0
+    current_sip = monthly_investment
+    
+    for month in range(1, total_months + 1):
+        # Apply annual step up every 12 months
+        if month > 1 and (month - 1) % 12 == 0:
+            current_sip += current_sip * (step_up_pct / 100)
+            
+        corpus = (corpus + current_sip) * (1 + monthly_rate)
+        total_invested += current_sip
+        
+    return {
+        'total_invested': round(total_invested),
+        'final_corpus': round(corpus),
+        'wealth_gain': round(corpus - total_invested)
+    }
+
+# Example 10,000 SIP for 20 years at 12% CAGR with 10% step-up
+res = calculate_sip_corpus(10000, 12, 20, step_up_pct=10)
+print("Total Invested:", res['total_invested'])
+print("Final Step-Up Corpus:", res['final_corpus'])
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "What is a realistic CAGR assumption for Nifty 50 index funds in India?",
+        answer: "Historically, the Nifty 50 Total Returns Index (TRI) has delivered between 11% to 13% CAGR over rolling 15+ year time horizons."
+      },
+      {
+        question: "What is Rupee-Cost Averaging?",
+        answer: "Rupee-Cost Averaging means buying more fund units when prices drop and fewer units when prices rise, lowering your average cost per unit over market cycles."
+      },
+      {
+        question: "How is Equity Mutual Fund SIP taxed under LTCG in India?",
+        answer: "Long-Term Capital Gains (LTCG) above ₹1.25 Lacs per financial year are taxed at 12.5% without indexation benefit (as per revised budget regulations)."
+      }
+    ],
+    relatedArticles: [
+      { title: "Demystifying Price-to-Earnings (P/E) Ratio", slug: "demystifying-price-to-earnings-pe-ratio" },
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
+    ],
+    relatedTools: [
+      { name: "SIP Calculator", slug: "sip-calculator" },
+      { name: "CAGR Calculator", slug: "cagr-calculator" }
+    ],
+    sources: [
+      "Bogle, John C. The Little Book of Common Sense Investing. Wiley, 2017.",
+      "Malkiel, Burton G. A Random Walk Down Wall Street. W. W. Norton & Company, 2019."
+    ]
+  },
+
+  // 3. OPTIONS DELTA & THETA MECHANICS
   {
     slug: "options-delta-and-theta-mechanics-guide",
     title: "Options Delta & Theta Mechanics: Price Sensitivity & Time Decay Explained",
@@ -283,7 +424,7 @@ print("ATM Daily Theta Decay (₹):", greeks['theta_per_day'])
     ]
   },
 
-  // 3. OPTIONS GREEKS OVERVIEW ARTICLE
+  // 4. OPTIONS GREEKS OVERVIEW ARTICLE
   {
     slug: "understanding-options-greeks-delta-theta-vega",
     title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained",
@@ -368,7 +509,7 @@ print("ATM Daily Theta Decay (₹):", greeks['theta_per_day'])
     ]
   },
 
-  // 4. FUNDAMENTAL ANALYSIS ARTICLE
+  // 5. FUNDAMENTAL ANALYSIS ARTICLE
   {
     slug: "demystifying-price-to-earnings-pe-ratio",
     title: "Demystifying P/E Ratio: How to Evaluate Valuation Metrics in Indian Stocks",
