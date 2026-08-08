@@ -4,7 +4,7 @@ import { CATEGORIES } from '@/data/categories';
 import { TOOLS } from '@/data/tools';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://marketlab-india-blog.vercel.app';
+  const baseUrl = 'https://marketlab-india-blog.vercel.app';
 
   const staticPages = [
     '',
