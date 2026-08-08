@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Naresh Kashyap", url: "https://marketlabindia.com/about" }],
   creator: "MarketLab India",
+  verification: {
+    google: "google219518a8c1164667",
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
