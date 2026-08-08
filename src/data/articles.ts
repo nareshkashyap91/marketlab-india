@@ -152,10 +152,135 @@ def calculate_rsi(data, period=14):
     youtubeVideoId: "dQw4w9WgXcQ"
   },
 
-  // 2. NEW ARTICLE: SIP COMPOUNDING MATRIX
+  // 2. STOCK MARKET BASICS 1: NSE & BSE FRAMEWORK
   {
-    slug: "sip-compounding-matrix-and-wealth-projection-guide",
-    title: "SIP Compounding Matrix: How Monthly SIPs Multiply Long-Term Wealth",
+    slug: "nse-and-bse-stock-exchange-framework-guide",
+    title: "NSE & BSE Stock Exchange Framework: Order Matching, SEBI & Clearing Houses",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "10 min read",
+    shortAnswer: "The National Stock Exchange (NSE) and Bombay Stock Exchange (BSE) form the primary trading framework in India. Orders executed via stockbrokers are cleared and settled by clearing corporations under SEBI regulatory oversight.",
+    contentHtml: `
+      <h2>1. Introduction to Indian Stock Exchanges</h2>
+      <p>India features two major national stock exchanges: the <strong>National Stock Exchange (NSE)</strong> established in 1992 (pioneering electronic screen-based trading) and the <strong>Bombay Stock Exchange (BSE)</strong> established in 1875 (Asia's oldest stock exchange).</p>
+
+      <h2>2. Order Matching Engine & NEAT System</h2>
+      <p>Trading on NSE and BSE operates on an anonymous electronic limit order book system. Orders matched by price-time priority automatically connect buyers and sellers without specialist market makers.</p>
+      
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">Order Matching Priority = Price Priority &rarr; Time Priority</p>
+      </div>
+
+      <h2>3. The Clearing & Settlement Framework (T+1 Settlement)</h2>
+      <p>India is a global pioneer in adopting the <strong>T+1 Rolling Settlement Cycle</strong>. When a stock transaction occurs on Day T (e.g., Monday), shares and funds are settled by the Clearing Corporation (NSCCL for NSE, ICCL for BSE) by Day T+1 (Tuesday).</p>
+
+      <h2>4. Regulatory Oversight: SEBI's Role</h2>
+      <p>The Securities and Exchange Board of India (SEBI) regulates exchange operations, broker margin rules, insider trading prevention, and investor protection frameworks.</p>
+    `,
+    faqs: [
+      {
+        question: "What is the difference between NSE and BSE?",
+        answer: "NSE is India's largest exchange by trading volume and derivatives market share, benchmarked by the Nifty 50. BSE is the oldest exchange with over 5,000 listed companies, benchmarked by the Sensex."
+      },
+      {
+        question: "What is T+1 settlement in India?",
+        answer: "T+1 means stock transactions are finalized, funds transferred, and shares delivered to Demat accounts within 1 business day after the trade date."
+      }
+    ],
+    relatedArticles: [
+      { title: "Demat & Trading Account Basics", slug: "demat-and-trading-account-basics-guide" },
+      { title: "Market Order Types Explained", slug: "market-order-types-limit-stop-loss-gtt-guide" }
+    ],
+    relatedTools: [
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" },
+      { name: "Position Size Calculator", slug: "position-size-calculator" }
+    ],
+    sources: [
+      "Securities and Exchange Board of India (SEBI). Market Masterclasses & Circulars, 2024.",
+      "National Stock Exchange of India (NSE). NCFM Capital Market Module Handbook, 2023."
+    ]
+  },
+
+  // 3. STOCK MARKET BASICS 2: DEMAT & TRADING ACCOUNT BASICS
+  {
+    slug: "demat-and-trading-account-basics-guide",
+    title: "Demat & Trading Account Basics: NSDL, CDSL, T+1 Settlement & DP Charges",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "9 min read",
+    shortAnswer: "A Trading Account executes buy/sell orders on stock exchanges, while a Demat (Dematerialized) Account holds securities in electronic format. NSDL and CDSL act as central depositories safeguarding Indian investor assets.",
+    contentHtml: `
+      <h2>1. The Architecture of Stock Trading Accounts</h2>
+      <p>To participate in Indian equity markets, an investor requires a 3-in-1 account ecosystem:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Bank Account:</strong> Transfers money to and from the broker.</li>
+        <li><strong>Trading Account:</strong> Executes buy and sell orders on NSE/BSE.</li>
+        <li><strong>Demat Account:</strong> Electronic vault where shares, ETFs, and bonds are safely stored.</li>
+      </ul>
+
+      <h2>2. Depositories: NSDL vs. CDSL</h2>
+      <p>Shares in India are dematerialized and maintained by central depositories:</p>
+      <table class="w-full text-left my-4 border-collapse border border-slate-800 text-xs">
+        <thead>
+          <tr class="bg-slate-900 text-cyan-400">
+            <th class="p-3 border border-slate-800">Depository</th>
+            <th class="p-3 border border-slate-800">Promoter / Exchange</th>
+            <th class="p-3 border border-slate-800">Demat Account ID Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold">NSDL (National Securities Depository Ltd)</td>
+            <td class="p-3 border border-slate-800">NSE, IDBI Bank</td>
+            <td class="p-3 border border-slate-800 font-mono">14 digits starting with 'IN'</td>
+          </tr>
+          <tr>
+            <td class="p-3 border border-slate-800 font-bold">CDSL (Central Depository Services Ltd)</td>
+            <td class="p-3 border border-slate-800">BSE, SBI, HDFC Bank</td>
+            <td class="p-3 border border-slate-800 font-mono">16 numeric digits</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>3. Understanding DP Charges & Brokerage Costs</h2>
+      <p>Depository Participant (DP) charges are flat fees charged by depositories and brokers whenever shares are debited (sold) from a Demat account, regardless of transaction value.</p>
+    `,
+    faqs: [
+      {
+        question: "Is my share safe in a Demat account if my stockbroker goes bankrupt?",
+        answer: "Yes! Shares are held directly with central depositories (NSDL or CDSL), not with the stockbroker. If a broker fails, your shares remain safe in your NSDL/CDSL account."
+      },
+      {
+        question: "What is DP Charge when selling stock?",
+        answer: "DP Charge is a flat fee (~₹13.5 to ₹20 + GST) levied per stock sell transaction per day by CDSL/NSDL and your broker."
+      }
+    ],
+    relatedArticles: [
+      { title: "NSE & BSE Stock Exchange Framework", slug: "nse-and-bse-stock-exchange-framework-guide" },
+      { title: "Market Order Types Explained", slug: "market-order-types-limit-stop-loss-gtt-guide" }
+    ],
+    relatedTools: [
+      { name: "Position Size Calculator", slug: "position-size-calculator" },
+      { name: "SIP Calculator", slug: "sip-calculator" }
+    ],
+    sources: [
+      "National Securities Depository Limited (NSDL). Investor Education Handbook, 2024.",
+      "Central Depository Services Limited (CDSL). Depository Regulations, 2023."
+    ]
+  },
+
+  // 4. STOCK MARKET BASICS 3: MARKET ORDER TYPES
+  {
+    slug: "market-order-types-limit-stop-loss-gtt-guide",
+    title: "Market Order Types Explained: Market, Limit, Stop-Loss (SL-M), & GTT Orders",
     category: "Stock Market Basics",
     categorySlug: "stock-market-basics",
     author: "Naresh Kashyap",
@@ -163,137 +288,187 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "11 min read",
-    shortAnswer: "A Systematic Investment Plan (SIP) uses monthly compound interest mathematics and rupee-cost averaging to build long-term wealth. The SIP Compounding Matrix proves how time duration exponentially dominates investment size over 10 to 30 years.",
+    shortAnswer: "Stock exchange order types determine price execution parameters. Market orders execute immediately at current bid/ask price, Limit orders execute only at specified price or better, while Stop-Loss (SL) and GTT orders automate risk management.",
     contentHtml: `
-      <h2>1. The Mathematics of SIP Compounding</h2>
-      <p>A <strong>Systematic Investment Plan (SIP)</strong> allows investors to deploy a fixed sum of money into equity mutual funds or index funds at regular monthly intervals. Unlike a lump-sum deposit, each SIP instalment compounds for a different duration.</p>
-      <p>The Future Value (\(FV\)) of an annuity-due SIP formula is expressed mathematically as:</p>
+      <h2>1. The Four Core Order Types in Equity Trading</h2>
+      <p>When placing an order on NSE or BSE, choosing the correct order type protects traders from execution slippage and unintended losses.</p>
+
+      <h2>2. Market Order vs. Limit Order</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Market Order:</strong> Instructs the exchange to execute immediately at the best available market price. Subject to slippage during high volatility.</li>
+        <li><strong>Limit Order:</strong> Specifies the maximum price you are willing to pay (Buy Limit) or minimum price you are willing to accept (Sell Limit). Protects against bad fills.</li>
+      </ul>
+
+      <h2>3. Stop-Loss Orders (SL & SL-M)</h2>
+      <p>Stop-loss orders trigger automatically when stock price breaches a designated Trigger Price:</p>
       
       <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">FV = P \\times \\left[ \\frac{(1 + i)^n - 1}{i} \\right] \\times (1 + i)</p>
-        <p class="font-mono text-emerald-400 mt-2">where P = Monthly SIP, i = Expected Monthly Rate (CAGR / 12), n = Total Months</p>
+        <p class="font-mono text-cyan-400">SL Order = Trigger Price &rarr; Converts to Limit Order</p>
+        <p class="font-mono text-emerald-400 mt-2">SL-M Order = Trigger Price &rarr; Converts to Market Order</p>
       </div>
 
-      <h2>2. The Definitive SIP Compounding Matrix (12% Expected CAGR)</h2>
-      <p>The matrix below demonstrates the total wealth created (Invested Amount vs. Projected Corpus) across different monthly investment levels and time horizons assuming a realistic 12% annual compounding rate (Nifty 50 historical benchmark average):</p>
+      <h2>4. Good-Till-Triggered (GTT) Orders</h2>
+      <p>GTT orders remain active for up to 1 year on Indian broker platforms, triggering buy or sell orders only when target price is hit.</p>
+    `,
+    faqs: [
+      {
+        question: "What is execution slippage in Market orders?",
+        answer: "Slippage is the difference between expected price when placing a market order and actual executed price caused by fast market movements or low liquidity."
+      },
+      {
+        question: "Why did SEBI ban SL-M orders in options trading?",
+        answer: "SEBI restricted SL-M in options due to freak trades and low market depth causing catastrophic execution fills."
+      }
+    ],
+    relatedArticles: [
+      { title: "Demat & Trading Account Basics", slug: "demat-and-trading-account-basics-guide" },
+      { title: "NSE & BSE Stock Exchange Framework", slug: "nse-and-bse-stock-exchange-framework-guide" }
+    ],
+    relatedTools: [
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" },
+      { name: "Position Size Calculator", slug: "position-size-calculator" }
+    ],
+    sources: [
+      "NSE India. Order Matching Engine Execution Protocols, 2024.",
+      "Zerodha Varsity. Technical Analysis & Module 1 Trading Mechanics."
+    ]
+  },
+
+  // 5. STOCK MARKET BASICS 4: MARKET CAPITALIZATION
+  {
+    slug: "market-capitalization-large-cap-mid-cap-small-cap-guide",
+    title: "Market Capitalization Demystified: Large-Cap, Mid-Cap, Small-Cap & SEBI Rules",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "9 min read",
+    shortAnswer: "Market Capitalization measures total rupee market value of a company's outstanding shares. SEBI strictly categorizes Indian listed stocks into Large-Cap (1-100), Mid-Cap (101-250), and Small-Cap (251+) by market cap rank.",
+    contentHtml: `
+      <h2>1. The Formula for Market Capitalization</h2>
+      <p>Market Cap reflects total equity value assigned to a company by market participants:</p>
+
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Market Capitalization = Current Share Price \\times Total Outstanding Shares
+      </div>
+
+      <h2>2. SEBI Categorization Framework</h2>
+      <p>Under SEBI circular guidelines, AMFI updates twice-yearly market cap rankings for equity mutual fund classification:</p>
 
       <table class="w-full text-left my-4 border-collapse border border-slate-800 text-xs">
         <thead>
           <tr class="bg-slate-900 text-cyan-400">
-            <th class="p-3 border border-slate-800">Monthly SIP</th>
-            <th class="p-3 border border-slate-800">10 Years</th>
-            <th class="p-3 border border-slate-800">15 Years</th>
-            <th class="p-3 border border-slate-800">20 Years</th>
-            <th class="p-3 border border-slate-800">25 Years</th>
-            <th class="p-3 border border-slate-800">30 Years</th>
+            <th class="p-3 border border-slate-800">Category</th>
+            <th class="p-3 border border-slate-800">Market Rank (AMFI)</th>
+            <th class="p-3 border border-slate-800">Risk Profile</th>
+            <th class="p-3 border border-slate-800">Growth Profile</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹5,000 / mo</td>
-            <td class="p-3 border border-slate-800">₹11.6 Lacs</td>
-            <td class="p-3 border border-slate-800">₹25.2 Lacs</td>
-            <td class="p-3 border border-slate-800">₹49.9 Lacs</td>
-            <td class="p-3 border border-slate-800">₹94.9 Lacs</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹1.76 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-emerald-400">Large-Cap</td>
+            <td class="p-3 border border-slate-800">Top 1st to 100th Stock</td>
+            <td class="p-3 border border-slate-800">Lowest Volatility / High Stability</td>
+            <td class="p-3 border border-slate-800">Steady 10-14% Compound Growth</td>
           </tr>
           <tr>
-            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹10,000 / mo</td>
-            <td class="p-3 border border-slate-800">₹23.2 Lacs</td>
-            <td class="p-3 border border-slate-800">₹50.5 Lacs</td>
-            <td class="p-3 border border-slate-800">₹99.9 Lacs</td>
-            <td class="p-3 border border-slate-800 text-emerald-400">₹1.90 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹3.53 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-cyan-400">Mid-Cap</td>
+            <td class="p-3 border border-slate-800">101st to 250th Stock</td>
+            <td class="p-3 border border-slate-800">Moderate Volatility</td>
+            <td class="p-3 border border-slate-800">High Growth Potential</td>
           </tr>
           <tr>
-            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹25,000 / mo</td>
-            <td class="p-3 border border-slate-800">₹58.1 Lacs</td>
-            <td class="p-3 border border-slate-800">₹1.26 Crore</td>
-            <td class="p-3 border border-slate-800">₹2.50 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹4.74 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹8.82 Crore</td>
-          </tr>
-          <tr>
-            <td class="p-3 border border-slate-800 font-bold text-amber-400">₹50,000 / mo</td>
-            <td class="p-3 border border-slate-800">₹1.16 Crore</td>
-            <td class="p-3 border border-slate-800">₹2.52 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹4.99 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹9.49 Crore</td>
-            <td class="p-3 border border-slate-800 font-bold text-emerald-400">₹17.65 Crore</td>
+            <td class="p-3 border border-slate-800 font-bold text-amber-400">Small-Cap</td>
+            <td class="p-3 border border-slate-800">251st Stock and Below</td>
+            <td class="p-3 border border-slate-800 text-rose-400">High Volatility & Drawdown Risk</td>
+            <td class="p-3 border border-slate-800">Multibagger Growth Opportunity</td>
           </tr>
         </tbody>
       </table>
-
-      <h2>3. The Cost of Delay: Why Starting 5 Years Early Matters</h2>
-      <p>Compounding power builds disproportionately in the final decade. Delaying a ₹10,000 monthly SIP start date by just 5 years results in a massive wealth gap at age 60:</p>
-
-      <div class="bg-slate-900 border-l-4 border-amber-500 p-4 my-4 rounded">
-        <h4 class="text-amber-400 font-bold mb-1">Comparative Cost of Delay Example:</h4>
-        <p>• <strong>Investor A (Starts at Age 25):</strong> Invests ₹10,000/month for 35 Years @ 12% CAGR. Total Invested = ₹42 Lacs. <strong>Final Wealth = ₹6.49 Crore.</strong></p>
-        <p class="mt-2">• <strong>Investor B (Starts at Age 30):</strong> Invests ₹10,000/month for 30 Years @ 12% CAGR. Total Invested = ₹36 Lacs. <strong>Final Wealth = ₹3.53 Crore.</strong></p>
-        <p class="mt-2 text-cyan-400"><strong>Wealth Penalty for 5-Year Delay: ₹2.96 Crore Loss!</strong> (Investor B sacrificed ₹2.96 Crore wealth to save just ₹6 Lacs in contributions).</p>
-      </div>
-
-      <h2>4. Step-Up SIP: The Wealth Accelerator</h2>
-      <p>A <strong>Step-Up SIP</strong> automatically increases your monthly investment by a fixed percentage (e.g. 10% annual increment) to align with annual salary hikes. A ₹10,000 SIP stepped up by 10% yearly produces nearly <strong>double the corpus</strong> of a flat SIP over 20 years!</p>
-
-      <h2>5. Python Script: Simulating SIP Compounding Schedules</h2>
-      <pre><code>def calculate_sip_corpus(monthly_investment, annual_rate_pct, years, step_up_pct=0):
-    total_months = years * 12
-    monthly_rate = (annual_rate_pct / 100) / 12
-    corpus = 0
-    total_invested = 0
-    current_sip = monthly_investment
-    
-    for month in range(1, total_months + 1):
-        # Apply annual step up every 12 months
-        if month > 1 and (month - 1) % 12 == 0:
-            current_sip += current_sip * (step_up_pct / 100)
-            
-        corpus = (corpus + current_sip) * (1 + monthly_rate)
-        total_invested += current_sip
-        
-    return {
-        'total_invested': round(total_invested),
-        'final_corpus': round(corpus),
-        'wealth_gain': round(corpus - total_invested)
-    }
-
-# Example 10,000 SIP for 20 years at 12% CAGR with 10% step-up
-res = calculate_sip_corpus(10000, 12, 20, step_up_pct=10)
-print("Total Invested:", res['total_invested'])
-print("Final Step-Up Corpus:", res['final_corpus'])
-</code></pre>
     `,
     faqs: [
       {
-        question: "What is a realistic CAGR assumption for Nifty 50 index funds in India?",
-        answer: "Historically, the Nifty 50 Total Returns Index (TRI) has delivered between 11% to 13% CAGR over rolling 15+ year time horizons."
+        question: "What is Free-Float Market Capitalization?",
+        answer: "Free-Float Market Cap excludes promoter-held shares and counts only shares available for public trading on stock exchanges. Nifty 50 is weighted by Free-Float Market Cap."
       },
       {
-        question: "What is Rupee-Cost Averaging?",
-        answer: "Rupee-Cost Averaging means buying more fund units when prices drop and fewer units when prices rise, lowering your average cost per unit over market cycles."
-      },
-      {
-        question: "How is Equity Mutual Fund SIP taxed under LTCG in India?",
-        answer: "Long-Term Capital Gains (LTCG) above ₹1.25 Lacs per financial year are taxed at 12.5% without indexation benefit (as per revised budget regulations)."
+        question: "How often does SEBI update market cap categories?",
+        answer: "AMFI releases updated market capitalization lists semi-annually (in January and July)."
       }
     ],
     relatedArticles: [
       { title: "Demystifying Price-to-Earnings (P/E) Ratio", slug: "demystifying-price-to-earnings-pe-ratio" },
-      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
+      { title: "SIP Compounding Matrix", slug: "sip-compounding-matrix-and-wealth-projection-guide" }
     ],
     relatedTools: [
-      { name: "SIP Calculator", slug: "sip-calculator" },
+      { name: "P/E Calculator", slug: "pe-calculator" },
       { name: "CAGR Calculator", slug: "cagr-calculator" }
     ],
     sources: [
-      "Bogle, John C. The Little Book of Common Sense Investing. Wiley, 2017.",
-      "Malkiel, Burton G. A Random Walk Down Wall Street. W. W. Norton & Company, 2019."
+      "SEBI Categorization Circular for Mutual Funds, 2017.",
+      "Association of Mutual Funds in India (AMFI) Semi-Annual Market Cap Data."
     ]
   },
 
-  // 3. OPTIONS DELTA & THETA MECHANICS
+  // 6. STOCK MARKET BASICS 5: CORPORATE ACTIONS
+  {
+    slug: "corporate-actions-dividends-stock-splits-bonus-rights-guide",
+    title: "Corporate Actions Guide: Dividend Yields, Stock Splits, Bonus Issues & Ex-Date Math",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-08-09",
+    updatedDate: "2026-08-09",
+    readTime: "10 min read",
+    shortAnswer: "Corporate actions are events initiated by a listed company that impact its equity structure or financial payouts. Key corporate actions include cash dividends, stock splits, bonus shares, and rights issues.",
+    contentHtml: `
+      <h2>1. Understanding Key Corporate Actions</h2>
+      <p>Listed companies return value or alter capital structure through corporate actions:</p>
+
+      <h2>2. Cash Dividends & Dividend Yield</h2>
+      <p>Dividends represent net profits distributed to shareholders:</p>
+      
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Dividend Yield (%) = (Annual Dividend per Share / Current Stock Price) \\times 100
+      </div>
+
+      <h2>3. Stock Splits vs. Bonus Issues</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Stock Split (e.g. 1:5 Split):</strong> Decreases face value of shares (e.g. ₹10 to ₹2). Total market cap remains identical, while share quantity multiplies by 5.</li>
+        <li><strong>Bonus Issue (e.g. 1:1 Bonus):</strong> Capitalizes free reserves to issue free additional shares. Face value remains unchanged.</li>
+      </ul>
+
+      <h2>4. The Importance of Record Date & Ex-Date Math</h2>
+      <p>To be eligible for dividends or bonus shares under T+1 settlement, investors must purchase stock at least 1 trading day before the <strong>Ex-Date</strong>.</p>
+    `,
+    faqs: [
+      {
+        question: "Does stock price drop on Ex-Dividend date?",
+        answer: "Yes, on the Ex-Dividend date, the stock price automatically adjusts downward by approximately the dividend payout amount per share."
+      },
+      {
+        question: "What is the difference between Record Date and Ex-Date?",
+        answer: "Record Date is the cutoff date set by the company to verify shareholders in depository records. Ex-Date is the date on which trading starts without eligibility for the corporate action."
+      }
+    ],
+    relatedArticles: [
+      { title: "Demystifying Price-to-Earnings (P/E) Ratio", slug: "demystifying-price-to-earnings-pe-ratio" },
+      { title: "Market Capitalization Demystified", slug: "market-capitalization-large-cap-mid-cap-small-cap-guide" }
+    ],
+    relatedTools: [
+      { name: "Dividend Yield Calculator", slug: "dividend-yield-calculator" },
+      { name: "P/E Calculator", slug: "pe-calculator" }
+    ],
+    sources: [
+      "BSE Corporate Actions Governance Rules, 2024.",
+      "SEBI Listing Obligations and Disclosure Requirements (LODR) Regulations."
+    ]
+  },
+
+  // 7. OPTIONS DELTA & THETA MECHANICS
   {
     slug: "options-delta-and-theta-mechanics-guide",
     title: "Options Delta & Theta Mechanics: Price Sensitivity & Time Decay Explained",
@@ -424,7 +599,7 @@ print("ATM Daily Theta Decay (₹):", greeks['theta_per_day'])
     ]
   },
 
-  // 4. OPTIONS GREEKS OVERVIEW ARTICLE
+  // 8. OPTIONS GREEKS OVERVIEW ARTICLE
   {
     slug: "understanding-options-greeks-delta-theta-vega",
     title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained",
@@ -509,7 +684,7 @@ print("ATM Daily Theta Decay (₹):", greeks['theta_per_day'])
     ]
   },
 
-  // 5. FUNDAMENTAL ANALYSIS ARTICLE
+  // 9. FUNDAMENTAL ANALYSIS ARTICLE
   {
     slug: "demystifying-price-to-earnings-pe-ratio",
     title: "Demystifying P/E Ratio: How to Evaluate Valuation Metrics in Indian Stocks",
