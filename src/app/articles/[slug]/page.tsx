@@ -2,11 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ARTICLES, Article } from "@/data/articles";
-import { Clock, User, Calendar, CheckCircle2, HelpCircle, Wrench, BookOpen, ShieldAlert, ArrowLeft, Share2 } from "lucide-react";
+import { Clock, User, Calendar, CheckCircle2, HelpCircle, Wrench, BookOpen, ShieldAlert, ArrowLeft } from "lucide-react";
 import { AdBanner } from "@/components/ui/AdBanner";
 import { JsonLdSchema } from "@/components/seo/JsonLdSchema";
 import { RsiCalculator } from "@/components/tools/RsiCalculator";
 import { OptionPayoffCalculator } from "@/components/tools/OptionPayoffCalculator";
+import { SocialShareBar } from "@/components/ui/SocialShareBar";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
@@ -85,6 +86,9 @@ export default function ArticleDetailPage({ params }: { params: { slug: string }
         </div>
         <p className="text-sm text-slate-200 leading-relaxed">{article.shortAnswer}</p>
       </div>
+
+      {/* WhatsApp & Social Share Bar */}
+      <SocialShareBar title={article.title} />
 
       <AdBanner slot="article-top" />
 
