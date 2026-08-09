@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLdSchema } from "@/components/seo/JsonLdSchema";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: {
@@ -59,6 +60,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
