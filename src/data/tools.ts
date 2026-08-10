@@ -13,6 +13,18 @@ export interface ToolMeta {
 
 export const TOOLS: ToolMeta[] = [
   {
+    id: "cpr-calculator",
+    name: "Intraday CPR Calculator",
+    slug: "cpr-calculator",
+    category: "Technical Analysis",
+    iconName: "Zap",
+    tagline: "Calculate Central Pivot Range (CPR), Pivot (P), R1-R3, and S1-S3 levels for Live Market trading.",
+    description: "Determine exact Top CPR (TC), Pivot, and Bottom CPR (BC) for Nifty 50, BankNifty, and Indian stocks during live market hours.",
+    isInteractive: true,
+    formula: "P = (H + L + C) / 3 | BC = (H + L) / 2 | TC = (P - BC) + P",
+    useCase: "Intraday live market trading level planning, breakout detection, and target setting."
+  },
+  {
     id: "rsi-calculator",
     name: "RSI Calculator",
     slug: "rsi-calculator",
