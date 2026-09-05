@@ -275,5 +275,41 @@ export const TOOLS: ToolMeta[] = [
     isInteractive: false,
     formula: "Total Margin = SPAN Margin + Exposure Margin",
     useCase: "Derivatives capital requirement planning."
+  },
+  {
+    id: "capital-gains-tax-calculator",
+    name: "Capital Gains Tax Calculator",
+    slug: "capital-gains-tax-calculator",
+    category: "Fundamental Analysis",
+    iconName: "Calculator",
+    tagline: "Calculate Short-Term (STCG @ 20%) and Long-Term (LTCG @ 12.5%) Capital Gains Tax for Indian stocks.",
+    description: "Determine exact tax liability on stock market investments as per the latest tax rules. Accounts for the ₹1.25 Lakh annual LTCG exemption limit.",
+    isInteractive: true,
+    formula: "STCG = Gains × 20% | LTCG = Max(0, Gains - 1.25L) × 12.5%",
+    useCase: "Tax planning and calculating net post-tax returns on Indian stock and mutual fund investments."
+  },
+  {
+    id: "swp-calculator",
+    name: "SWP Calculator",
+    slug: "swp-calculator",
+    category: "Personal Finance",
+    iconName: "PiggyBank",
+    tagline: "Calculate monthly payout cash flows and remaining investment balance in Mutual Funds / ETFs.",
+    description: "Simulate Systematic Withdrawal Plans over 1 to 30 years. Compute total amount withdrawn, remaining corpus, and compound wealth growth.",
+    isInteractive: true,
+    formula: "Corpus_(t+1) = (Corpus_t - Payout) × (1 + ReturnRate / 12)",
+    useCase: "Retirement planning, monthly passive income forecasting, and mutual fund corpus management."
+  },
+  {
+    id: "option-greeks-calculator",
+    name: "Option Greeks Calculator",
+    slug: "option-greeks-calculator",
+    category: "Options Education",
+    iconName: "Activity",
+    tagline: "Compute Black-Scholes theoretical Call/Put option prices and Greeks (Delta, Gamma, Theta, Vega).",
+    description: "Input spot price, strike, DTE, volatility (IV %), and risk-free interest rate to calculate real-time option sensitivity metrics.",
+    isInteractive: true,
+    formula: "d1 = [ln(S/K) + (r + σ²/2)T] / (σ√T) | Delta = N(d1) | Theta = d1/d2 decay math",
+    useCase: "Professional options trading risk measurement, delta hedging, and theta decay analysis."
   }
 ];
