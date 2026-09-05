@@ -1,0 +1,37 @@
+name: Daily Automated Market Wrap Publisher
+
+on:
+  schedule:
+    # Runs automatically every day at 4:30 PM IST (11:00 AM UTC)
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch: # Allows manual trigger from GitHub UI if needed
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance requests beautifulsoup4
+
+      - name: Execute Daily MDX Blog Generator & Shorts Exporter
+        run: |
+          python automation-scripts/mdx_generator.py
+          python automation-scripts/youtube_shorts_exporter.py
+
+      - name: Commit and Push New Daily Content
+        run: |
+          git config --global user.name "MarketLab India AI Bot"
+          git config --global user.email "bot@marketlabindia.com"
+          git add content/blog/ automation-scripts/
+          git diff-index --quiet HEAD || git commit -m "Auto-publish daily market wrap & Shorts script [GitHub Action]"
+          git push origin main
