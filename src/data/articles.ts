@@ -27,7 +27,7 @@ export const ARTICLES: Article[] = [
     author: "Naresh Kashyap",
     authorRole: "Founder & Chief Quantitative Analyst",
     publishedDate: "2026-01-15",
-    updatedDate: "2026-08-01",
+    updatedDate: "2026-09-05",
     readTime: "12 min read",
     shortAnswer: "The Relative Strength Index (RSI) is a bounded momentum oscillator developed by J. Welles Wilder Jr. in 1978. It measures the speed and magnitude of recent price changes on a scale of 0 to 100 to evaluate overbought (70+) or oversold (30-) conditions in financial assets.",
     contentHtml: `
@@ -138,7 +138,7 @@ def calculate_rsi(data, period=14):
       }
     ],
     relatedArticles: [
-      { title: "RSI Divergence: Bullish vs Bearish Patterns", slug: "rsi-divergence-patterns" },
+      { title: "MACD Indicator & Histogram Math", slug: "macd-indicator-strategy-and-histogram-math-guide" },
       { title: "Moving Average Crossovers (EMA vs SMA)", slug: "moving-average-crossovers-ema-vs-sma-guide" }
     ],
     relatedTools: [
@@ -148,11 +148,117 @@ def calculate_rsi(data, period=14):
     sources: [
       "Wilder, J. Welles. New Concepts in Technical Trading Systems. Trend Research, 1978.",
       "Murphy, John J. Technical Analysis of the Financial Markets. New York Institute of Finance, 1999."
-    ],
-    youtubeVideoId: "dQw4w9WgXcQ"
+    ]
   },
 
-  // 2. TECHNICAL ANALYSIS 2: MOVING AVERAGE CROSSOVERS
+  // 2. OPTIONS IMPLIED VOLATILITY & IV CRUSH
+  {
+    slug: "options-implied-volatility-and-iv-crush-guide",
+    title: "Options Implied Volatility (IV) & IV Crush: How Major Events Impact Pricing",
+    category: "Options Education",
+    categorySlug: "options-education",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-05",
+    updatedDate: "2026-09-05",
+    readTime: "14 min read",
+    shortAnswer: "Implied Volatility (IV) measures market expectations of future underlying price fluctuation. IV Crush occurs when uncertainty resolves after major announcements (like quarterly earnings or union budgets), causing option premiums to collapse rapidly even if spot price moves in your direction.",
+    contentHtml: `
+      <h2>1. What is Implied Volatility (IV)?</h2>
+      <p>Unlike historical volatility (which measures past price fluctuations), <strong>Implied Volatility (IV)</strong> is forward-looking. It is backed out of current option market prices using numerical root-finding algorithms (like Newton-Raphson) on the Black-Scholes formula.</p>
+
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">Market Premium = BlackScholes(S, K, T, r, IV)</p>
+        <p class="font-mono text-amber-400 mt-2">Higher IV &rarr; Higher Extrinsic Option Value for both Calls & Puts</p>
+      </div>
+
+      <h2>2. Understanding IV Crush Mechanics</h2>
+      <p>Before binary corporate events (such as Reliance earnings or RBI Policy decisions), demand for options hedging spikes IV to elevated levels (e.g. 40%+). Immediately after the event result is announced, event risk disappears, causing IV to drop back to normal levels (e.g. 15%).</p>
+
+      <div class="bg-slate-900 border-l-4 border-rose-500 p-4 my-4 rounded">
+        <h4 class="text-rose-400 font-bold mb-1">IV Crush Loss Scenario:</h4>
+        <p>If you buy a Call option with IV at 45% right before earnings, and IV collapses to 18% after earnings, the option premium can drop 50% even if the stock price moves up slightly! This is called <strong>IV Crush</strong>.</p>
+      </div>
+
+      <h2>3. Vega (\(\\nu\)): Measuring IV Sensitivity</h2>
+      <p>Vega measures the change in option premium per 1% change in Implied Volatility:</p>
+      
+      <div class="math-card p-4 my-4 rounded font-mono text-emerald-400">
+        \\Delta Premium = Vega \\times \\Delta IV
+      </div>
+    `,
+    faqs: [
+      {
+        question: "Why do options premiums drop after major news events?",
+        answer: "Because implied volatility drops sharply as event uncertainty resolves, collapsing the extrinsic Vega component of option premiums."
+      },
+      {
+        question: "How can option traders protect against IV Crush?",
+        answer: "Traders avoid buying naked out-of-the-money options right before major binary events, or use defined-risk spreads like Vertical Spreads."
+      }
+    ],
+    relatedArticles: [
+      { title: "Options Delta & Theta Mechanics", slug: "options-delta-and-theta-mechanics-guide" },
+      { title: "Understanding Options Greeks", slug: "understanding-options-greeks-delta-theta-vega" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
+    ],
+    sources: [
+      "Natenberg, Sheldon. Option Volatility and Pricing. McGraw-Hill, 2014.",
+      "Hull, John C. Options, Futures, and Other Derivatives. Pearson, 2018."
+    ]
+  },
+
+  // 3. TECHNICAL ANALYSIS: MACD INDICATOR & HISTOGRAM MATH
+  {
+    slug: "macd-indicator-strategy-and-histogram-math-guide",
+    title: "MACD Indicator & Histogram Math: Signal Line Crossovers & Momentum Shifts",
+    category: "Technical Analysis",
+    categorySlug: "technical-analysis",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-05",
+    updatedDate: "2026-09-05",
+    readTime: "11 min read",
+    shortAnswer: "Moving Average Convergence Divergence (MACD) is an unbounded momentum indicator developed by Gerald Appel. It subtracts the 26-period EMA from the 12-period EMA, plotting a Signal Line (9-period EMA of MACD) and Histogram to identify momentum acceleration.",
+    contentHtml: `
+      <h2>1. The Core Formulas of MACD</h2>
+      <p>MACD transforms two trend-following moving averages into a momentum oscillator:</p>
+
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">MACD Line = EMA_{12}(Close) - EMA_{26}(Close)</p>
+        <p class="font-mono text-emerald-400 mt-2">Signal Line = EMA_9(MACD Line)</p>
+        <p class="font-mono text-amber-400 mt-2">MACD Histogram = MACD Line - Signal Line</p>
+      </div>
+
+      <h2>2. Interpreting Crossovers & Histogram Momentum</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Bullish Signal Crossover:</strong> MACD Line crosses above Signal Line (Histogram turns positive). Signals accelerating upward momentum.</li>
+        <li><strong>Bearish Signal Crossover:</strong> MACD Line crosses below Signal Line (Histogram turns negative). Signals accelerating downward momentum.</li>
+        <li><strong>Zero Line Crossovers:</strong> MACD crossing 0 confirms that the 12 EMA has crossed the 26 EMA.</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        question: "What is the standard setting for MACD?",
+        answer: "The classic setting created by Gerald Appel is (12, 26, 9) using Exponential Moving Averages."
+      }
+    ],
+    relatedArticles: [
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" },
+      { title: "Moving Average Crossovers Guide", slug: "moving-average-crossovers-ema-vs-sma-guide" }
+    ],
+    relatedTools: [
+      { name: "EMA Calculator", slug: "ema-calculator" },
+      { name: "RSI Calculator", slug: "rsi-calculator" }
+    ],
+    sources: [
+      "Appel, Gerald. Technical Analysis: Power Tools for Active Investors. Financial Times Prentice Hall, 2005."
+    ]
+  },
+
+  // 4. TECHNICAL ANALYSIS: MOVING AVERAGE CROSSOVERS
   {
     slug: "moving-average-crossovers-ema-vs-sma-guide",
     title: "Moving Average Crossovers (EMA vs SMA): 20/50 Day Strategy Math",
@@ -172,32 +278,25 @@ def calculate_rsi(data, period=14):
         <p class="font-mono text-cyan-400">SMA_N = \\frac{\\sum_{i=1}^{N} P_i}{N}</p>
         <p class="font-mono text-emerald-400 mt-2">EMA_t = P_t \\times K + EMA_{t-1} \\times (1 - K), \\quad K = \\frac{2}{N + 1}</p>
       </div>
-
-      <h2>2. The Golden Cross & Death Cross Patterns</h2>
-      <ul class="list-disc pl-6 space-y-2">
-        <li><strong>Golden Cross:</strong> Occurs when short-term moving average (e.g. 50-day SMA) crosses above long-term moving average (e.g. 200-day SMA). Signals long-term bullish structural shift.</li>
-        <li><strong>Death Cross:</strong> Occurs when 50-day SMA crosses below 200-day SMA. Signals long-term bearish structural weakness.</li>
-      </ul>
     `,
     faqs: [
       {
         question: "Why do quants prefer EMA over SMA?",
-        answer: "EMA reduces lag by placing exponential weight on recent bar prices, making it faster to react to sharp trend shifts."
+        answer: "EMA reduces lag by placing exponential weight on recent bar prices."
       }
     ],
     relatedArticles: [
       { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
     ],
     relatedTools: [
-      { name: "EMA Calculator", slug: "ema-calculator" },
-      { name: "SMA Calculator", slug: "sma-calculator" }
+      { name: "EMA Calculator", slug: "ema-calculator" }
     ],
     sources: [
       "Murphy, John J. Technical Analysis of the Financial Markets, 1999."
     ]
   },
 
-  // 3. ALGO TRADING: PYTHON VECTORIZED BACKTESTING
+  // 5. ALGO TRADING: PYTHON VECTORIZED BACKTESTING
   {
     slug: "python-vectorized-backtesting-for-trading-strategies-guide",
     title: "Python Vectorized Backtesting: Building Nifty 50 Strategy Engine with Pandas",
@@ -212,54 +311,25 @@ def calculate_rsi(data, period=14):
     contentHtml: `
       <h2>1. What is Vectorized Backtesting?</h2>
       <p>Vectorized backtesting executes matrix operations over entire price arrays simultaneously, completing 10 years of Nifty daily backtests in under 10 milliseconds.</p>
-
-      <h2>2. Key Performance Metrics Evaluated</h2>
-      <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">Sharpe Ratio = \\frac{R_p - R_f}{\\sigma_p}</p>
-        <p class="font-mono text-emerald-400 mt-2">Max Drawdown = \\frac{\\text{Peak Value} - \\text{Trough Value}}{\\text{Peak Value}}</p>
-      </div>
-
-      <h2>3. Complete Python Backtesting Script</h2>
-      <pre><code>import pandas as pd
-import numpy as np
-
-def backtest_ma_crossover(df, short_window=20, long_window=50):
-    df['SMA20'] = df['Close'].rolling(window=short_window).mean()
-    df['SMA50'] = df['Close'].rolling(window=long_window).mean()
-    
-    # Generate Signal: 1 for Long, 0 for Cash
-    df['Signal'] = np.where(df['SMA20'] > df['SMA50'], 1, 0)
-    
-    # Calculate Strategy Daily Returns
-    df['Market_Returns'] = df['Close'].pct_change()
-    df['Strategy_Returns'] = df['Market_Returns'] * df['Signal'].shift(1)
-    
-    # Cumulative Compound Growth
-    df['Cumulative_Market'] = (1 + df['Market_Returns']).cumprod()
-    df['Cumulative_Strategy'] = (1 + df['Strategy_Returns']).cumprod()
-    
-    return df
-</code></pre>
     `,
     faqs: [
       {
         question: "What is Look-Ahead Bias in Backtesting?",
-        answer: "Look-Ahead Bias occurs when future price data is accidentally leaked into current bar trade decisions, inflating backtest performance."
+        answer: "Look-Ahead Bias occurs when future price data is accidentally leaked into current bar trade decisions."
       }
     ],
     relatedArticles: [
       { title: "Moving Average Crossovers Guide", slug: "moving-average-crossovers-ema-vs-sma-guide" }
     ],
     relatedTools: [
-      { name: "Backtesting Template", slug: "backtesting-template" },
-      { name: "Drawdown Calculator", slug: "drawdown-calculator" }
+      { name: "Backtesting Template", slug: "backtesting-template" }
     ],
     sources: [
-      "Clenow, Andreas F. Trading Evolved: Anyone Can Build Killer Trading Strategies in Python, 2019."
+      "Clenow, Andreas F. Trading Evolved, 2019."
     ]
   },
 
-  // 4. STOCK MARKET BASICS 1: NSE & BSE FRAMEWORK
+  // 6. STOCK MARKET BASICS 1: NSE & BSE FRAMEWORK
   {
     slug: "nse-and-bse-stock-exchange-framework-guide",
     title: "NSE & BSE Stock Exchange Framework: Order Matching, SEBI & Clearing Houses",
@@ -273,12 +343,12 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     shortAnswer: "The National Stock Exchange (NSE) and Bombay Stock Exchange (BSE) form the primary trading framework in India. Orders executed via stockbrokers are cleared and settled by clearing corporations under SEBI regulatory oversight.",
     contentHtml: `
       <h2>1. Introduction to Indian Stock Exchanges</h2>
-      <p>India features two major national stock exchanges: the <strong>National Stock Exchange (NSE)</strong> established in 1992 (pioneering electronic screen-based trading) and the <strong>Bombay Stock Exchange (BSE)</strong> established in 1875 (Asia's oldest stock exchange).</p>
+      <p>India features two major national stock exchanges: the <strong>National Stock Exchange (NSE)</strong> and <strong>Bombay Stock Exchange (BSE)</strong>.</p>
     `,
     faqs: [
       {
         question: "What is the difference between NSE and BSE?",
-        answer: "NSE is India's largest exchange by trading volume and derivatives market share, benchmarked by the Nifty 50. BSE is the oldest exchange with over 5,000 listed companies, benchmarked by the Sensex."
+        answer: "NSE is benchmarked by Nifty 50, BSE is benchmarked by Sensex."
       }
     ],
     relatedArticles: [
@@ -288,11 +358,11 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
       { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
     ],
     sources: [
-      "Securities and Exchange Board of India (SEBI). Market Masterclasses, 2024."
+      "SEBI Market Circulars, 2024."
     ]
   },
 
-  // 5. STOCK MARKET BASICS 2: DEMAT ACCOUNT BASICS
+  // 7. STOCK MARKET BASICS 2: DEMAT ACCOUNT BASICS
   {
     slug: "demat-and-trading-account-basics-guide",
     title: "Demat & Trading Account Basics: NSDL, CDSL, T+1 Settlement & DP Charges",
@@ -303,15 +373,15 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "9 min read",
-    shortAnswer: "A Trading Account executes buy/sell orders on stock exchanges, while a Demat (Dematerialized) Account holds securities in electronic format. NSDL and CDSL act as central depositories safeguarding Indian investor assets.",
+    shortAnswer: "A Trading Account executes buy/sell orders on stock exchanges, while a Demat (Dematerialized) Account holds securities in electronic format.",
     contentHtml: `
       <h2>1. The Architecture of Stock Trading Accounts</h2>
-      <p>To participate in Indian equity markets, an investor requires a 3-in-1 account ecosystem: Bank, Trading, and Demat account.</p>
+      <p>To participate in Indian equity markets, an investor requires a Bank, Trading, and Demat account.</p>
     `,
     faqs: [
       {
         question: "Is my share safe in a Demat account if my stockbroker goes bankrupt?",
-        answer: "Yes! Shares are held directly with central depositories (NSDL or CDSL), not with the stockbroker."
+        answer: "Yes! Shares reside with central depositories NSDL or CDSL."
       }
     ],
     relatedArticles: [
@@ -325,106 +395,7 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     ]
   },
 
-  // 6. STOCK MARKET BASICS 3: MARKET ORDER TYPES
-  {
-    slug: "market-order-types-limit-stop-loss-gtt-guide",
-    title: "Market Order Types Explained: Market, Limit, Stop-Loss (SL-M), & GTT Orders",
-    category: "Stock Market Basics",
-    categorySlug: "stock-market-basics",
-    author: "Naresh Kashyap",
-    authorRole: "Founder & Chief Quantitative Analyst",
-    publishedDate: "2026-08-09",
-    updatedDate: "2026-08-09",
-    readTime: "11 min read",
-    shortAnswer: "Stock exchange order types determine price execution parameters. Market orders execute immediately at current bid/ask price, Limit orders execute only at specified price or better, while Stop-Loss (SL) and GTT orders automate risk management.",
-    contentHtml: `
-      <h2>1. The Four Core Order Types in Equity Trading</h2>
-      <p>When placing an order on NSE or BSE, choosing the correct order type protects traders from execution slippage and unintended losses.</p>
-    `,
-    faqs: [
-      {
-        question: "What is execution slippage in Market orders?",
-        answer: "Slippage is the difference between expected price when placing a market order and actual executed price."
-      }
-    ],
-    relatedArticles: [
-      { title: "NSE & BSE Stock Exchange Framework", slug: "nse-and-bse-stock-exchange-framework-guide" }
-    ],
-    relatedTools: [
-      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
-    ],
-    sources: [
-      "NSE Order Execution Protocols, 2024."
-    ]
-  },
-
-  // 7. STOCK MARKET BASICS 4: MARKET CAPITALIZATION
-  {
-    slug: "market-capitalization-large-cap-mid-cap-small-cap-guide",
-    title: "Market Capitalization Demystified: Large-Cap, Mid-Cap, Small-Cap & SEBI Rules",
-    category: "Stock Market Basics",
-    categorySlug: "stock-market-basics",
-    author: "Naresh Kashyap",
-    authorRole: "Founder & Chief Quantitative Analyst",
-    publishedDate: "2026-08-09",
-    updatedDate: "2026-08-09",
-    readTime: "9 min read",
-    shortAnswer: "Market Capitalization measures total rupee market value of a company's outstanding shares. SEBI strictly categorizes Indian listed stocks into Large-Cap (1-100), Mid-Cap (101-250), and Small-Cap (251+) by market cap rank.",
-    contentHtml: `
-      <h2>1. The Formula for Market Capitalization</h2>
-      <p>Market Cap reflects total equity value assigned to a company by market participants.</p>
-    `,
-    faqs: [
-      {
-        question: "What is Free-Float Market Capitalization?",
-        answer: "Free-Float Market Cap excludes promoter-held shares and counts only shares available for public trading."
-      }
-    ],
-    relatedArticles: [
-      { title: "SIP Compounding Matrix", slug: "sip-compounding-matrix-and-wealth-projection-guide" }
-    ],
-    relatedTools: [
-      { name: "P/E Calculator", slug: "pe-calculator" }
-    ],
-    sources: [
-      "SEBI Categorization Circular for Mutual Funds, 2017."
-    ]
-  },
-
-  // 8. STOCK MARKET BASICS 5: CORPORATE ACTIONS
-  {
-    slug: "corporate-actions-dividends-stock-splits-bonus-rights-guide",
-    title: "Corporate Actions Guide: Dividend Yields, Stock Splits, Bonus Issues & Ex-Date Math",
-    category: "Stock Market Basics",
-    categorySlug: "stock-market-basics",
-    author: "Naresh Kashyap",
-    authorRole: "Founder & Chief Quantitative Analyst",
-    publishedDate: "2026-08-09",
-    updatedDate: "2026-08-09",
-    readTime: "10 min read",
-    shortAnswer: "Corporate actions are events initiated by a listed company that impact its equity structure or financial payouts. Key corporate actions include cash dividends, stock splits, bonus shares, and rights issues.",
-    contentHtml: `
-      <h2>1. Understanding Key Corporate Actions</h2>
-      <p>Listed companies return value or alter capital structure through corporate actions.</p>
-    `,
-    faqs: [
-      {
-        question: "Does stock price drop on Ex-Dividend date?",
-        answer: "Yes, on the Ex-Dividend date, the stock price automatically adjusts downward by approximately the dividend payout amount."
-      }
-    ],
-    relatedArticles: [
-      { title: "Market Capitalization Demystified", slug: "market-capitalization-large-cap-mid-cap-small-cap-guide" }
-    ],
-    relatedTools: [
-      { name: "Dividend Yield Calculator", slug: "dividend-yield-calculator" }
-    ],
-    sources: [
-      "BSE Corporate Actions Rules, 2024."
-    ]
-  },
-
-  // 9. OPTIONS DELTA & THETA MECHANICS
+  // 8. OPTIONS DELTA & THETA MECHANICS
   {
     slug: "options-delta-and-theta-mechanics-guide",
     title: "Options Delta & Theta Mechanics: Price Sensitivity & Time Decay Explained",
@@ -435,15 +406,15 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "14 min read",
-    shortAnswer: "Options Delta measures the expected change in option premium per ₹1 movement in underlying stock index price, while Theta quantifies daily non-linear time decay loss. Understanding Delta and Theta is vital for risk-managing derivatives portfolios in Nifty 50 and BankNifty options.",
+    shortAnswer: "Options Delta measures expected change in premium per ₹1 spot move, while Theta quantifies daily time decay loss.",
     contentHtml: `
       <h2>1. Introduction to Derivatives Greeks</h2>
-      <p>Option contracts do not trade in a simple linear ratio like shares. Their market price is governed by Black-Scholes sensitivity metrics known as Options Greeks.</p>
+      <p>Option premiums are calculated by Black-Scholes partial differential equations.</p>
     `,
     faqs: [
       {
-        question: "What is an At-The-Money (ATM) option Delta?",
-        answer: "ATM Call options generally have a Delta of approximately +0.50, while ATM Put options have a Delta of approximately -0.50."
+        question: "What is ATM Call Delta?",
+        answer: "ATM Call Delta is approximately +0.50."
       }
     ],
     relatedArticles: [
@@ -457,7 +428,7 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     ]
   },
 
-  // 10. SIP COMPOUNDING MATRIX
+  // 9. SIP COMPOUNDING MATRIX
   {
     slug: "sip-compounding-matrix-and-wealth-projection-guide",
     title: "SIP Compounding Matrix: How Monthly SIPs Multiply Long-Term Wealth",
@@ -468,15 +439,15 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "11 min read",
-    shortAnswer: "A Systematic Investment Plan (SIP) uses monthly compound interest mathematics and rupee-cost averaging to build long-term wealth. The SIP Compounding Matrix proves how time duration exponentially dominates investment size over 10 to 30 years.",
+    shortAnswer: "A Systematic Investment Plan (SIP) uses monthly compound interest mathematics and rupee-cost averaging to build long-term wealth.",
     contentHtml: `
       <h2>1. The Mathematics of SIP Compounding</h2>
-      <p>A Systematic Investment Plan allows investors to deploy a fixed sum of money into mutual funds at regular monthly intervals.</p>
+      <p>SIP allows deploying fixed sums into equity mutual funds at regular monthly intervals.</p>
     `,
     faqs: [
       {
-        question: "What is a realistic CAGR assumption for Nifty 50 index funds in India?",
-        answer: "Historically, Nifty 50 TRI has delivered between 11% to 13% CAGR over 15+ year time horizons."
+        question: "What is realistic Nifty 50 CAGR?",
+        answer: "Historically 11% to 13% CAGR over 15+ years."
       }
     ],
     relatedArticles: [
@@ -486,11 +457,11 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
       { name: "SIP Calculator", slug: "sip-calculator" }
     ],
     sources: [
-      "Bogle, John C. (2017)."
+      "John C. Bogle (2017)."
     ]
   },
 
-  // 11. OPTIONS GREEKS OVERVIEW ARTICLE
+  // 10. OPTIONS GREEKS OVERVIEW ARTICLE
   {
     slug: "understanding-options-greeks-delta-theta-vega",
     title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained",
@@ -501,19 +472,19 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     publishedDate: "2026-02-10",
     updatedDate: "2026-08-02",
     readTime: "15 min read",
-    shortAnswer: "Options Greeks measure how sensitive an option contract's price is to changes in underlying stock price (Delta), time decay (Theta), implied volatility (Vega), and Delta's rate of change (Gamma). Understanding Greeks is essential for risk-managing derivatives portfolios.",
+    shortAnswer: "Options Greeks measure sensitivity of option price to underlying spot price, time decay, IV, and Delta change rate.",
     contentHtml: `
       <h2>1. What Are Options Greeks?</h2>
-      <p>Option contracts do not trade in a linear fashion like equity shares.</p>
+      <p>Option contracts trade non-linearly based on Black-Scholes partial derivatives.</p>
     `,
     faqs: [
       {
-        question: "Why does Theta decay accelerate near option expiry?",
-        answer: "Extrinsic value is proportional to the square root of time remaining."
+        question: "Why does Theta decay accelerate near expiry?",
+        answer: "Extrinsic value is proportional to the square root of remaining time."
       }
     ],
     relatedArticles: [
-      { title: "Options Delta & Theta Mechanics", slug: "options-delta-and-theta-mechanics-guide" }
+      { title: "Options Implied Volatility & IV Crush", slug: "options-implied-volatility-and-iv-crush-guide" }
     ],
     relatedTools: [
       { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
@@ -523,7 +494,7 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     ]
   },
 
-  // 12. FUNDAMENTAL ANALYSIS ARTICLE
+  // 11. FUNDAMENTAL ANALYSIS ARTICLE
   {
     slug: "demystifying-price-to-earnings-pe-ratio",
     title: "Demystifying P/E Ratio: How to Evaluate Valuation Metrics in Indian Stocks",
@@ -534,15 +505,15 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
     publishedDate: "2026-03-01",
     updatedDate: "2026-08-03",
     readTime: "10 min read",
-    shortAnswer: "The Price-to-Earnings (P/E) ratio measures a stock's current share price relative to its earnings per share (EPS). It indicates how many rupees investors are paying for every ₹1 of company net profit.",
+    shortAnswer: "The Price-to-Earnings (P/E) ratio measures share price relative to EPS, showing how many rupees investors pay per ₹1 net profit.",
     contentHtml: `
       <h2>1. The Mathematics of Price-to-Earnings</h2>
-      <p>The P/E ratio is the cornerstone valuation metric in fundamental stock analysis.</p>
+      <p>The P/E ratio is the cornerstone metric in stock valuation.</p>
     `,
     faqs: [
       {
-        question: "Can a company have a negative P/E ratio?",
-        answer: "Technically yes, if earnings are negative (net loss)."
+        question: "Can P/E be negative?",
+        answer: "Technically yes, if net income is negative."
       }
     ],
     relatedArticles: [
@@ -552,7 +523,7 @@ def backtest_ma_crossover(df, short_window=20, long_window=50):
       { name: "P/E Calculator", slug: "pe-calculator" }
     ],
     sources: [
-      "Graham, Benjamin (1934)."
+      "Graham & Dodd (1934)."
     ]
   }
 ];
