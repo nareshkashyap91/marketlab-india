@@ -1,11 +1,42 @@
+import os
+import sys
+import glob
 
+# Ensure UTF-8 output encoding for Windows terminal
+sys.stdout.reconfigure(encoding='utf-8')
+
+def get_latest_mdx_file():
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    target_dir = os.path.join(base_dir, "content", "blog")
+    files = glob.glob(os.path.join(target_dir, "*.mdx")) + glob.glob(os.path.join(target_dir, "*.md"))
+    if not files:
+        return None
+    latest_file = max(files, key=os.path.getctime)
+    return latest_file
+
+def generate_youtube_shorts_script(mdx_filepath=None):
+    if not mdx_filepath:
+        mdx_filepath = get_latest_mdx_file()
+        
+    if not mdx_filepath or not os.path.exists(mdx_filepath):
+        print("No MDX blog post found!")
+        return None
+        
+    with open(mdx_filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+        
+    filename = os.path.basename(mdx_filepath)
+    title_line = [line for line in content.split("\n") if line.startswith("title:") or line.startswith("# ")]
+    title = title_line[0].replace("title:", "").replace("# ", "").strip(' "') if title_line else "Daily Stock Market Update"
+    
+    shorts_script = f"""
 ================================================================================
 YOUTUBE SHORTS AUTOMATED SCRIPT EXPORTER (60 SECONDS)
-Source Article: 2026-09-05-daily-market-wrap.mdx
+Source Article: {filename}
 ================================================================================
 
 VIDEO TITLE:
-"Nifty 50 (24850.15) & Bank Nifty Daily Market Wrap: FII/DII Data (2026-09-05) | 60-Sec Indian Stock Market Update"
+"{title} | 60-Sec Indian Stock Market Update"
 
 --------------------------------------------------------------------------------
 60-SECOND VOICE OVER SCRIPT:
@@ -38,3 +69,18 @@ Explore free interactive financial tools and quantitative calculators at MarketL
 HASHTAGS & KEYWORDS:
 #Nifty50, #BankNifty, #StockMarketIndia, #FIIDII, #TradingStrategies, #MarketLabIndia
 ================================================================================
+"""
+
+    output_dir = os.path.dirname(os.path.abspath(__file__))
+    output_filepath = os.path.join(output_dir, "shorts_script_output.txt")
+    with open(output_filepath, "w", encoding="utf-8") as f:
+        f.write(shorts_script)
+        
+    print(f"SUCCESS: YouTube Shorts Script generated and saved to:")
+    print(f"File: {output_filepath}\n")
+    return shorts_script
+
+if __name__ == "__main__":
+    script = generate_youtube_shorts_script()
+    if script:
+        print(script)
