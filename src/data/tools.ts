@@ -13,6 +13,18 @@ export interface ToolMeta {
 
 export const TOOLS: ToolMeta[] = [
   {
+    id: "pdf-to-word-converter",
+    name: "PDF to Word Converter",
+    slug: "pdf-to-word-converter",
+    category: "Data Automation",
+    iconName: "FileText",
+    tagline: "Convert PDF documents to editable Microsoft Word (.docx) format 100% online & free.",
+    description: "Upload any PDF report, financial statement, or ebook and convert it into an editable Word (.doc / .docx) file instantly in your browser with zero server uploads.",
+    isInteractive: true,
+    formula: "PDF Parsing Engine -> Layout & Text Stream Extraction -> DOCX Document Compilation",
+    useCase: "Converting financial reports, research PDFs, and statements to editable Word format."
+  },
+  {
     id: "cpr-calculator",
     name: "Intraday CPR Calculator",
     slug: "cpr-calculator",
