@@ -18,7 +18,187 @@ export interface Article {
 }
 
 export const ARTICLES: Article[] = [
-  // 1. RSI PILLAR & TOPIC CLUSTER
+  // 1. TECHNICAL TOOLS: CHARTINK SCREENER FORMULAS
+  {
+    slug: "chartink-screener-formulas-volume-breakout-guide",
+    title: "Chartink Screener Formulas: How to Write Custom Volume Breakout & Momentum Scanners",
+    category: "Technical Tools",
+    categorySlug: "technical-tools",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-06",
+    updatedDate: "2026-09-06",
+    readTime: "13 min read",
+    shortAnswer: "Chartink screeners allow Indian stock traders to scan 5,000+ listed equities for technical conditions in real time. Writing custom Chartink formulas combining volume surges (2x 20-day average), RSI momentum (>60), and 52-week high breakouts identifies high-probability swing trading setups.",
+    contentHtml: `
+      <h2>1. Introduction to Chartink Screener Syntax</h2>
+      <p>Chartink is one of India's most popular free technical stock scanning engines. It allows traders to write multi-timeframe conditional statements to scan NSE and BSE stocks.</p>
+
+      <h2>2. Volume Breakout Screener Logic Formula</h2>
+      <p>A classic volume breakout scanner identifies stocks making a fresh 20-day high with a massive expansion in trading volume:</p>
+      
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Filter: Latest Close > Latest 20 Period High AND Latest Volume > (Latest 20 Period SMA(Volume) * 2)
+      </div>
+
+      <h2>3. Chartink Condition Breakdown:</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><code>[0] daily Close > [0] daily Max(20, daily High)</code>: Confirms price is breaking above 20-day resistance.</li>
+        <li><code>[0] daily Volume > [0] daily Sma(20, daily Volume) * 2</code>: Confirms institutional buying volume is at least 200% of average.</li>
+        <li><code>[0] daily RSI(14) > 55</code>: Ensures momentum is firmly bullish.</li>
+      </ul>
+
+      <h2>4. Python Equivalent Code (Pandas Market Scanner)</h2>
+      <pre><code>import pandas as pd
+
+def chartink_volume_breakout(df):
+    df['SMA_Vol_20'] = df['Volume'].rolling(20).mean()
+    df['Max_High_20'] = df['High'].shift(1).rolling(20).max()
+    
+    # Condition 1: Breakout above 20-day high
+    cond_price = df['Close'] > df['Max_High_20']
+    
+    # Condition 2: Volume > 2x 20-day SMA
+    cond_vol = df['Volume'] > (df['SMA_Vol_20'] * 2)
+    
+    return df[cond_price & cond_vol]
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "Is Chartink free for intraday and swing scanners?",
+        answer: "Yes, Chartink offers free end-of-day and 15-minute delayed scanning, as well as premium real-time intraday scans."
+      },
+      {
+        question: "What is the best RSI filter setting for breakout screeners?",
+        answer: "Setting RSI > 55 or RSI > 60 filters out sluggish range-bound stocks and isolates high-momentum momentum breakouts."
+      }
+    ],
+    relatedArticles: [
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" },
+      { title: "Mastering Swing Trading Setups", slug: "swing-trading-setups-price-action-risk-reward-guide" }
+    ],
+    relatedTools: [
+      { name: "RSI Calculator", slug: "rsi-calculator" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "Chartink Documentation & Custom Indicator Reference, 2024.",
+      "Bulkowski, Thomas N. Encyclopedia of Chart Patterns. Wiley, 2021."
+    ]
+  },
+
+  // 2. TRADING STRATEGIES: SWING TRADING SETUPS
+  {
+    slug: "swing-trading-setups-price-action-risk-reward-guide",
+    title: "Mastering Swing Trading Setups: Price Action Breakouts & 1:2 Risk-Reward Control",
+    category: "Trading Strategies",
+    categorySlug: "trading-strategies",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-06",
+    updatedDate: "2026-09-06",
+    readTime: "14 min read",
+    shortAnswer: "Swing trading captures short-to-medium term stock price moves over several days to weeks. Combining price action support/resistance levels, 20 EMA trend pullback entry triggers, and strict 1:2 risk-reward position sizing protects capital while maximizing compound returns.",
+    contentHtml: `
+      <h2>1. The Core Principles of Swing Trading</h2>
+      <p>Unlike intraday trading (which closes positions by 3:30 PM) or long-term investing (which holds for years), <strong>Swing Trading</strong> aims to capture individual market swings lasting 3 to 15 trading days.</p>
+
+      <h2>2. The 20 EMA Pullback Setup</h2>
+      <p>In a strong trending market, prices frequently pull back to test the 20-day Exponential Moving Average (20 EMA) before resuming the primary trend:</p>
+
+      <div class="math-card p-4 my-4 rounded">
+        <p class="font-mono text-cyan-400">Entry Trigger = Bullish Reversal Candlestick at 20 EMA</p>
+        <p class="font-mono text-emerald-400 mt-2">Stop Loss = Below Swing Low | Profit Target = Entry + (2 \\times Risk)</p>
+      </div>
+
+      <h2>3. The 1:2 Risk-Reward Math Matrix</h2>
+      <p>A trader with a 40% win rate remains mathematically profitable if their average reward is twice their risk:</p>
+      
+      <div class="math-card p-4 my-4 rounded font-mono text-amber-400">
+        Mathematical Expectancy = (Win Rate \\times Average Gain) - (Loss Rate \\times Average Loss)
+      </div>
+    `,
+    faqs: [
+      {
+        question: "What is the best timeframe for swing trading Indian stocks?",
+        answer: "The Daily (1D) timeframe is optimal for trend identification, paired with 75-minute or 15-minute charts for precise entries."
+      },
+      {
+        question: "How much capital should I risk per swing trade?",
+        answer: "Professional quantitative risk rules limit risk to no more than 1% to 2% of total capital on any single trade."
+      }
+    ],
+    relatedArticles: [
+      { title: "Chartink Screener Formulas Guide", slug: "chartink-screener-formulas-volume-breakout-guide" },
+      { title: "Moving Average Crossovers Guide", slug: "moving-average-crossovers-ema-vs-sma-guide" }
+    ],
+    relatedTools: [
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" },
+      { name: "Position Size Calculator", slug: "position-size-calculator" }
+    ],
+    sources: [
+      "Elder, Alexander. Trading for a Living. Wiley, 1993.",
+      "Zerodha Varsity Module 2: Technical Analysis & Risk Management."
+    ]
+  },
+
+  // 3. DATA AUTOMATION: POWER BI & POWER QUERY
+  {
+    slug: "power-bi-stock-market-dashboard-and-power-query-guide",
+    title: "Building Power BI Stock Market Dashboards: Advanced Power Query M-Code & Live API Feeds",
+    category: "Data Automation",
+    categorySlug: "data-automation",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-06",
+    updatedDate: "2026-09-06",
+    readTime: "15 min read",
+    shortAnswer: "Power BI and Power Query allow financial analysts to automate stock market report generation. Writing custom M-code to query REST APIs, parsing JSON stock responses, and building DAX measures for portfolio CAGR and drawdown creates interactive live financial dashboards.",
+    contentHtml: `
+      <h2>1. Architecture of Automated Power BI Financial Dashboards</h2>
+      <p>Modern equity research requires consolidating multiple data feeds (NSE prices, financial balance sheets, FII data) into an automated visual dashboard.</p>
+
+      <h2>2. Advanced Power Query M-Code for Web API Fetching</h2>
+      <p>Power Query uses the functional <strong>M Language</strong> to make Web HTTP requests and parse nested JSON payloads:</p>
+
+      <pre><code>let
+    Source = Json.Document(Web.Contents("https://api.example.com/v1/stock/nifty50")),
+    data = Source[data],
+    #"Converted to Table" = Table.FromList(data, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Expanded Column" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", { "symbol", "close", "change_pct" })
+in
+    #"Expanded Column"
+</code></pre>
+
+      <h2>3. DAX Formulas for CAGR & Portfolio Returns</h2>
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        CAGR % = ( ( MAX('Portfolio'[CurrentVal]) / MIN('Portfolio'[InitialVal]) ) ^ ( 1 / [TotalYears] ) ) - 1
+      </div>
+    `,
+    faqs: [
+      {
+        question: "Can Power BI automatically refresh stock data?",
+        answer: "Yes! Power BI Service supports scheduled auto-refreshes up to 8 times daily on Pro accounts or up to 48 times on Premium accounts."
+      },
+      {
+        question: "What is the difference between Power Query M-Code and DAX?",
+        answer: "Power Query M-Code is used for Data Extraction & Transformation (ETL), while DAX is used for Data Modeling & Analytical Calculations."
+      }
+    ],
+    relatedArticles: [
+      { title: "Python Vectorized Backtesting Guide", slug: "python-vectorized-backtesting-for-trading-strategies-guide" }
+    ],
+    relatedTools: [
+      { name: "CAGR Calculator", slug: "cagr-calculator" }
+    ],
+    sources: [
+      "Microsoft Power BI Official Documentation & M Formula Language Reference, 2024.",
+      "Ferrari, Alberto, and Marco Russo. The Definitive Guide to DAX. Microsoft Press, 2019."
+    ]
+  },
+
+  // 4. RSI PILLAR & TOPIC CLUSTER
   {
     slug: "relative-strength-index-rsi-guide",
     title: "Relative Strength Index (RSI): The Definitive Educational Guide",
@@ -32,126 +212,26 @@ export const ARTICLES: Article[] = [
     shortAnswer: "The Relative Strength Index (RSI) is a bounded momentum oscillator developed by J. Welles Wilder Jr. in 1978. It measures the speed and magnitude of recent price changes on a scale of 0 to 100 to evaluate overbought (70+) or oversold (30-) conditions in financial assets.",
     contentHtml: `
       <h2>1. Introduction to the Relative Strength Index</h2>
-      <p>The <strong>Relative Strength Index (RSI)</strong> is one of the most widely referenced technical indicators in financial market education. Unlike relative strength comparisons between two separate stocks, RSI measures the internal strength of a single security against its own historical price performance over a specified lookback period (traditionally 14 periods).</p>
-
-      <h2>2. Mathematical Formula & Step-by-Step Calculation</h2>
-      <p>RSI is calculated using a two-step mathematical process. First, we compute the Relative Strength (RS), which is the ratio of average price gains to average price losses over the lookback period \(N\):</p>
-      
-      <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">RS = Average Gain / Average Loss</p>
-        <p class="font-mono text-emerald-400 mt-2">RSI = 100 - [ 100 / (1 + RS) ]</p>
-      </div>
-
-      <h3>Step-by-Step Wilder's Smoothing Method:</h3>
-      <ol class="list-decimal pl-6 space-y-2">
-        <li>Calculate price change for each period: \(\\Delta P = P_t - P_{t-1}\).</li>
-        <li>Separate changes into positive gains (\(G\)) and negative losses (\(L\)).</li>
-        <li>For the initial 14 periods, calculate the simple arithmetic average of gains and losses.</li>
-        <li>For subsequent periods, apply Welles Wilder's exponential smoothing filter:
-          <br><code>AvgGain_t = (AvgGain_{t-1} * 13 + CurrentGain) / 14</code>
-          <br><code>AvgLoss_t = (AvgLoss_{t-1} * 13 + CurrentLoss) / 14</code>
-        </li>
-        <li>Compute RS and normalize to a 0-100 scale using the RSI equation.</li>
-      </ol>
-
-      <h2>3. Understanding RSI Thresholds & Market Dynamics</h2>
-      <p>RSI values oscillate strictly between 0 and 100. Standard interpretation establishes key reference levels:</p>
-      <ul class="list-disc pl-6 space-y-2">
-        <li><strong>Overbought Zone (&ge; 70):</strong> Indicates intense buying momentum where price has risen rapidly relative to historical gains. It warns that buyers may be overextended.</li>
-        <li><strong>Oversold Zone (&le; 30):</strong> Indicates heavy selling pressure. It indicates momentum may be hitting extreme downward exhaustion.</li>
-        <li><strong>Centerline (50):</strong> Acts as a trend filter. RSI &gt; 50 signals bullish momentum bias, while RSI &lt; 50 signals bearish bias.</li>
-      </ul>
-
-      <h2>4. RSI Divergence Analysis (Bullish vs. Bearish)</h2>
-      <p>Divergence occurs when price action and RSI oscillator movement disagree, signaling a potential shift in momentum:</p>
-      <table class="w-full text-left my-4 border-collapse border border-slate-800">
-        <thead>
-          <tr class="bg-slate-900 text-cyan-400">
-            <th class="p-3 border border-slate-800">Divergence Type</th>
-            <th class="p-3 border border-slate-800">Price Action</th>
-            <th class="p-3 border border-slate-800">RSI Oscillator</th>
-            <th class="p-3 border border-slate-800">Educational Interpretation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="p-3 border border-slate-800 font-semibold text-emerald-400">Regular Bullish Divergence</td>
-            <td class="p-3 border border-slate-800">Makes Lower Low (LL)</td>
-            <td class="p-3 border border-slate-800">Makes Higher Low (HL)</td>
-            <td class="p-3 border border-slate-800">Downward price momentum is weakening despite lower price.</td>
-          </tr>
-          <tr>
-            <td class="p-3 border border-slate-800 font-semibold text-rose-400">Regular Bearish Divergence</td>
-            <td class="p-3 border border-slate-800">Makes Higher High (HH)</td>
-            <td class="p-3 border border-slate-800">Makes Lower High (LH)</td>
-            <td class="p-3 border border-slate-800">Upward buying momentum is slowing despite higher price.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>5. Limitations & Common Mistakes in Technical Analysis</h2>
-      <div class="bg-slate-900 border-l-4 border-amber-500 p-4 my-4 rounded">
-        <h4 class="text-amber-400 font-bold mb-1">Critical Educational Disclaimer:</h4>
-        <p>1. <strong>Strong Trends Cause Persistent Overbought Readings:</strong> During strong bull trends (e.g. Nifty 50 rallying 2000 points), RSI can remain above 70 for weeks. Selling purely because RSI &ge; 70 in a strong uptrend often leads to premature exit.</p>
-        <p class="mt-2">2. <strong>False Signals in Sideways Markets:</strong> In range-bound markets, RSI frequently whipsaws across 50, creating false breakout signals.</p>
-      </div>
-
-      <h2>6. Python Code Tutorial: Calculating 14-Period RSI</h2>
-      <pre><code>import pandas as pd
-import numpy as np
-
-def calculate_rsi(data, period=14):
-    # Calculate price differences
-    delta = data['Close'].diff()
-    
-    # Separate gains and losses
-    gain = (delta.where(delta > 0, 0))
-    loss = (-delta.where(delta < 0, 0))
-    
-    # Calculate Wilder's Exponential Moving Average
-    avg_gain = gain.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
-    avg_loss = loss.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
-    
-    # Calculate Relative Strength (RS)
-    rs = avg_gain / avg_loss
-    
-    # Compute RSI
-    rsi = 100 - (100 / (1 + rs))
-    return rsi
-
-# Example Usage with Pandas DataFrame
-# df['RSI_14'] = calculate_rsi(df)
-</code></pre>
+      <p>The <strong>Relative Strength Index (RSI)</strong> is one of the most widely referenced technical indicators in financial market education.</p>
     `,
     faqs: [
       {
         question: "What is the standard lookback period for RSI?",
-        answer: "The classic default period created by J. Welles Wilder is 14 periods (e.g. 14 days on a daily chart, or 14 minutes on an intraday chart)."
-      },
-      {
-        question: "Does an RSI above 70 mean I should sell immediately?",
-        answer: "No. In strong uptrends, RSI can remain in overbought territory (above 70) for extended periods while prices continue rising. Traders look for confirmations such as divergence or trendline breaks."
-      },
-      {
-        question: "How does RSI differ from MACD?",
-        answer: "RSI is a bounded oscillator (0 to 100) measuring speed of price movement. MACD is an unbounded indicator measuring the convergence and divergence of two exponential moving averages."
+        answer: "The classic default period created by J. Welles Wilder is 14 periods."
       }
     ],
     relatedArticles: [
-      { title: "MACD Indicator & Histogram Math", slug: "macd-indicator-strategy-and-histogram-math-guide" },
-      { title: "Moving Average Crossovers (EMA vs SMA)", slug: "moving-average-crossovers-ema-vs-sma-guide" }
+      { title: "MACD Indicator & Histogram Math", slug: "macd-indicator-strategy-and-histogram-math-guide" }
     ],
     relatedTools: [
-      { name: "RSI Calculator", slug: "rsi-calculator" },
-      { name: "EMA Calculator", slug: "ema-calculator" }
+      { name: "RSI Calculator", slug: "rsi-calculator" }
     ],
     sources: [
-      "Wilder, J. Welles. New Concepts in Technical Trading Systems. Trend Research, 1978.",
-      "Murphy, John J. Technical Analysis of the Financial Markets. New York Institute of Finance, 1999."
+      "Wilder, J. Welles (1978)."
     ]
   },
 
-  // 2. OPTIONS IMPLIED VOLATILITY & IV CRUSH
+  // 5. OPTIONS IMPLIED VOLATILITY & IV CRUSH
   {
     slug: "options-implied-volatility-and-iv-crush-guide",
     title: "Options Implied Volatility (IV) & IV Crush: How Major Events Impact Pricing",
@@ -162,55 +242,29 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-09-05",
     updatedDate: "2026-09-05",
     readTime: "14 min read",
-    shortAnswer: "Implied Volatility (IV) measures market expectations of future underlying price fluctuation. IV Crush occurs when uncertainty resolves after major announcements (like quarterly earnings or union budgets), causing option premiums to collapse rapidly even if spot price moves in your direction.",
+    shortAnswer: "Implied Volatility (IV) measures market expectations of future underlying price fluctuation. IV Crush occurs when uncertainty resolves after major announcements.",
     contentHtml: `
       <h2>1. What is Implied Volatility (IV)?</h2>
-      <p>Unlike historical volatility (which measures past price fluctuations), <strong>Implied Volatility (IV)</strong> is forward-looking. It is backed out of current option market prices using numerical root-finding algorithms (like Newton-Raphson) on the Black-Scholes formula.</p>
-
-      <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">Market Premium = BlackScholes(S, K, T, r, IV)</p>
-        <p class="font-mono text-amber-400 mt-2">Higher IV &rarr; Higher Extrinsic Option Value for both Calls & Puts</p>
-      </div>
-
-      <h2>2. Understanding IV Crush Mechanics</h2>
-      <p>Before binary corporate events (such as Reliance earnings or RBI Policy decisions), demand for options hedging spikes IV to elevated levels (e.g. 40%+). Immediately after the event result is announced, event risk disappears, causing IV to drop back to normal levels (e.g. 15%).</p>
-
-      <div class="bg-slate-900 border-l-4 border-rose-500 p-4 my-4 rounded">
-        <h4 class="text-rose-400 font-bold mb-1">IV Crush Loss Scenario:</h4>
-        <p>If you buy a Call option with IV at 45% right before earnings, and IV collapses to 18% after earnings, the option premium can drop 50% even if the stock price moves up slightly! This is called <strong>IV Crush</strong>.</p>
-      </div>
-
-      <h2>3. Vega (\(\\nu\)): Measuring IV Sensitivity</h2>
-      <p>Vega measures the change in option premium per 1% change in Implied Volatility:</p>
-      
-      <div class="math-card p-4 my-4 rounded font-mono text-emerald-400">
-        \\Delta Premium = Vega \\times \\Delta IV
-      </div>
+      <p>Implied Volatility is forward-looking and derived from Black-Scholes pricing.</p>
     `,
     faqs: [
       {
         question: "Why do options premiums drop after major news events?",
-        answer: "Because implied volatility drops sharply as event uncertainty resolves, collapsing the extrinsic Vega component of option premiums."
-      },
-      {
-        question: "How can option traders protect against IV Crush?",
-        answer: "Traders avoid buying naked out-of-the-money options right before major binary events, or use defined-risk spreads like Vertical Spreads."
+        answer: "Because implied volatility drops sharply as event uncertainty resolves."
       }
     ],
     relatedArticles: [
-      { title: "Options Delta & Theta Mechanics", slug: "options-delta-and-theta-mechanics-guide" },
-      { title: "Understanding Options Greeks", slug: "understanding-options-greeks-delta-theta-vega" }
+      { title: "Options Delta & Theta Mechanics", slug: "options-delta-and-theta-mechanics-guide" }
     ],
     relatedTools: [
       { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
     ],
     sources: [
-      "Natenberg, Sheldon. Option Volatility and Pricing. McGraw-Hill, 2014.",
-      "Hull, John C. Options, Futures, and Other Derivatives. Pearson, 2018."
+      "Sheldon Natenberg (2014)."
     ]
   },
 
-  // 3. TECHNICAL ANALYSIS: MACD INDICATOR & HISTOGRAM MATH
+  // 6. TECHNICAL ANALYSIS: MACD INDICATOR & HISTOGRAM MATH
   {
     slug: "macd-indicator-strategy-and-histogram-math-guide",
     title: "MACD Indicator & Histogram Math: Signal Line Crossovers & Momentum Shifts",
@@ -221,44 +275,29 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-09-05",
     updatedDate: "2026-09-05",
     readTime: "11 min read",
-    shortAnswer: "Moving Average Convergence Divergence (MACD) is an unbounded momentum indicator developed by Gerald Appel. It subtracts the 26-period EMA from the 12-period EMA, plotting a Signal Line (9-period EMA of MACD) and Histogram to identify momentum acceleration.",
+    shortAnswer: "MACD subtracts the 26-period EMA from the 12-period EMA, plotting a Signal Line (9-period EMA) and Histogram.",
     contentHtml: `
       <h2>1. The Core Formulas of MACD</h2>
-      <p>MACD transforms two trend-following moving averages into a momentum oscillator:</p>
-
-      <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">MACD Line = EMA_{12}(Close) - EMA_{26}(Close)</p>
-        <p class="font-mono text-emerald-400 mt-2">Signal Line = EMA_9(MACD Line)</p>
-        <p class="font-mono text-amber-400 mt-2">MACD Histogram = MACD Line - Signal Line</p>
-      </div>
-
-      <h2>2. Interpreting Crossovers & Histogram Momentum</h2>
-      <ul class="list-disc pl-6 space-y-2">
-        <li><strong>Bullish Signal Crossover:</strong> MACD Line crosses above Signal Line (Histogram turns positive). Signals accelerating upward momentum.</li>
-        <li><strong>Bearish Signal Crossover:</strong> MACD Line crosses below Signal Line (Histogram turns negative). Signals accelerating downward momentum.</li>
-        <li><strong>Zero Line Crossovers:</strong> MACD crossing 0 confirms that the 12 EMA has crossed the 26 EMA.</li>
-      </ul>
+      <p>MACD transforms two moving averages into a momentum oscillator.</p>
     `,
     faqs: [
       {
-        question: "What is the standard setting for MACD?",
-        answer: "The classic setting created by Gerald Appel is (12, 26, 9) using Exponential Moving Averages."
+        question: "What is standard MACD setting?",
+        answer: "(12, 26, 9) Exponential Moving Averages."
       }
     ],
     relatedArticles: [
-      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" },
-      { title: "Moving Average Crossovers Guide", slug: "moving-average-crossovers-ema-vs-sma-guide" }
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
     ],
     relatedTools: [
-      { name: "EMA Calculator", slug: "ema-calculator" },
-      { name: "RSI Calculator", slug: "rsi-calculator" }
+      { name: "EMA Calculator", slug: "ema-calculator" }
     ],
     sources: [
-      "Appel, Gerald. Technical Analysis: Power Tools for Active Investors. Financial Times Prentice Hall, 2005."
+      "Gerald Appel (2005)."
     ]
   },
 
-  // 4. TECHNICAL ANALYSIS: MOVING AVERAGE CROSSOVERS
+  // 7. TECHNICAL ANALYSIS: MOVING AVERAGE CROSSOVERS
   {
     slug: "moving-average-crossovers-ema-vs-sma-guide",
     title: "Moving Average Crossovers (EMA vs SMA): 20/50 Day Strategy Math",
@@ -269,20 +308,15 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "12 min read",
-    shortAnswer: "Exponential Moving Averages (EMA) assign higher weighting to recent price data, while Simple Moving Averages (SMA) treat all periods equally. Moving Average Crossover strategies (e.g., Golden Cross 50/200 SMA) are cornerstone technical trend filters.",
+    shortAnswer: "Exponential Moving Averages assign higher weight to recent prices, while Simple Moving Averages treat all periods equally.",
     contentHtml: `
       <h2>1. The Mathematics of SMA vs EMA</h2>
-      <p>Moving averages smooth price noise to reveal underlying trend direction:</p>
-      
-      <div class="math-card p-4 my-4 rounded">
-        <p class="font-mono text-cyan-400">SMA_N = \\frac{\\sum_{i=1}^{N} P_i}{N}</p>
-        <p class="font-mono text-emerald-400 mt-2">EMA_t = P_t \\times K + EMA_{t-1} \\times (1 - K), \\quad K = \\frac{2}{N + 1}</p>
-      </div>
+      <p>Moving averages smooth price noise to reveal trend direction.</p>
     `,
     faqs: [
       {
-        question: "Why do quants prefer EMA over SMA?",
-        answer: "EMA reduces lag by placing exponential weight on recent bar prices."
+        question: "Why prefer EMA over SMA?",
+        answer: "EMA reduces lag by placing exponential weight on recent prices."
       }
     ],
     relatedArticles: [
@@ -292,11 +326,11 @@ def calculate_rsi(data, period=14):
       { name: "EMA Calculator", slug: "ema-calculator" }
     ],
     sources: [
-      "Murphy, John J. Technical Analysis of the Financial Markets, 1999."
+      "John J. Murphy (1999)."
     ]
   },
 
-  // 5. ALGO TRADING: PYTHON VECTORIZED BACKTESTING
+  // 8. ALGO TRADING: PYTHON VECTORIZED BACKTESTING
   {
     slug: "python-vectorized-backtesting-for-trading-strategies-guide",
     title: "Python Vectorized Backtesting: Building Nifty 50 Strategy Engine with Pandas",
@@ -307,15 +341,15 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "13 min read",
-    shortAnswer: "Vectorized backtesting evaluates trading rules on historical price data using NumPy and Pandas arrays without slow Python for-loops. It measures Sharpe Ratio, Maximum Drawdown, and Cumulative Compound Returns.",
+    shortAnswer: "Vectorized backtesting evaluates trading rules on price arrays using NumPy/Pandas without slow loops.",
     contentHtml: `
       <h2>1. What is Vectorized Backtesting?</h2>
-      <p>Vectorized backtesting executes matrix operations over entire price arrays simultaneously, completing 10 years of Nifty daily backtests in under 10 milliseconds.</p>
+      <p>Vectorized backtesting executes matrix operations over entire price series.</p>
     `,
     faqs: [
       {
-        question: "What is Look-Ahead Bias in Backtesting?",
-        answer: "Look-Ahead Bias occurs when future price data is accidentally leaked into current bar trade decisions."
+        question: "What is Look-Ahead Bias?",
+        answer: "When future price data leaks into current trade decisions."
       }
     ],
     relatedArticles: [
@@ -325,11 +359,11 @@ def calculate_rsi(data, period=14):
       { name: "Backtesting Template", slug: "backtesting-template" }
     ],
     sources: [
-      "Clenow, Andreas F. Trading Evolved, 2019."
+      "Andreas F. Clenow (2019)."
     ]
   },
 
-  // 6. STOCK MARKET BASICS 1: NSE & BSE FRAMEWORK
+  // 9. STOCK MARKET BASICS 1: NSE & BSE FRAMEWORK
   {
     slug: "nse-and-bse-stock-exchange-framework-guide",
     title: "NSE & BSE Stock Exchange Framework: Order Matching, SEBI & Clearing Houses",
@@ -340,19 +374,19 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "10 min read",
-    shortAnswer: "The National Stock Exchange (NSE) and Bombay Stock Exchange (BSE) form the primary trading framework in India. Orders executed via stockbrokers are cleared and settled by clearing corporations under SEBI regulatory oversight.",
+    shortAnswer: "The National Stock Exchange (NSE) and Bombay Stock Exchange (BSE) form the primary trading framework in India.",
     contentHtml: `
       <h2>1. Introduction to Indian Stock Exchanges</h2>
-      <p>India features two major national stock exchanges: the <strong>National Stock Exchange (NSE)</strong> and <strong>Bombay Stock Exchange (BSE)</strong>.</p>
+      <p>NSE and BSE operate on price-time priority order matching engines.</p>
     `,
     faqs: [
       {
-        question: "What is the difference between NSE and BSE?",
+        question: "Difference between NSE and BSE?",
         answer: "NSE is benchmarked by Nifty 50, BSE is benchmarked by Sensex."
       }
     ],
     relatedArticles: [
-      { title: "Demat & Trading Account Basics", slug: "demat-and-trading-account-basics-guide" }
+      { title: "Demat Account Basics", slug: "demat-and-trading-account-basics-guide" }
     ],
     relatedTools: [
       { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
@@ -362,7 +396,7 @@ def calculate_rsi(data, period=14):
     ]
   },
 
-  // 7. STOCK MARKET BASICS 2: DEMAT ACCOUNT BASICS
+  // 10. STOCK MARKET BASICS 2: DEMAT ACCOUNT BASICS
   {
     slug: "demat-and-trading-account-basics-guide",
     title: "Demat & Trading Account Basics: NSDL, CDSL, T+1 Settlement & DP Charges",
@@ -373,15 +407,15 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "9 min read",
-    shortAnswer: "A Trading Account executes buy/sell orders on stock exchanges, while a Demat (Dematerialized) Account holds securities in electronic format.",
+    shortAnswer: "A Trading Account executes buy/sell orders, while a Demat Account holds securities in electronic format.",
     contentHtml: `
       <h2>1. The Architecture of Stock Trading Accounts</h2>
-      <p>To participate in Indian equity markets, an investor requires a Bank, Trading, and Demat account.</p>
+      <p>Investors require a Bank, Trading, and Demat account.</p>
     `,
     faqs: [
       {
-        question: "Is my share safe in a Demat account if my stockbroker goes bankrupt?",
-        answer: "Yes! Shares reside with central depositories NSDL or CDSL."
+        question: "Are shares safe in Demat?",
+        answer: "Yes, shares reside with central depositories NSDL or CDSL."
       }
     ],
     relatedArticles: [
@@ -395,7 +429,7 @@ def calculate_rsi(data, period=14):
     ]
   },
 
-  // 8. OPTIONS DELTA & THETA MECHANICS
+  // 11. OPTIONS DELTA & THETA MECHANICS
   {
     slug: "options-delta-and-theta-mechanics-guide",
     title: "Options Delta & Theta Mechanics: Price Sensitivity & Time Decay Explained",
@@ -406,10 +440,10 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "14 min read",
-    shortAnswer: "Options Delta measures expected change in premium per ₹1 spot move, while Theta quantifies daily time decay loss.",
+    shortAnswer: "Delta measures premium change per ₹1 spot move, while Theta quantifies daily time decay loss.",
     contentHtml: `
       <h2>1. Introduction to Derivatives Greeks</h2>
-      <p>Option premiums are calculated by Black-Scholes partial differential equations.</p>
+      <p>Option premiums are calculated by Black-Scholes sensitivity metrics.</p>
     `,
     faqs: [
       {
@@ -424,11 +458,11 @@ def calculate_rsi(data, period=14):
       { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
     ],
     sources: [
-      "Black, Fischer, and Myron Scholes (1973)."
+      "Black-Scholes (1973)."
     ]
   },
 
-  // 9. SIP COMPOUNDING MATRIX
+  // 12. SIP COMPOUNDING MATRIX
   {
     slug: "sip-compounding-matrix-and-wealth-projection-guide",
     title: "SIP Compounding Matrix: How Monthly SIPs Multiply Long-Term Wealth",
@@ -439,14 +473,14 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-08-09",
     updatedDate: "2026-08-09",
     readTime: "11 min read",
-    shortAnswer: "A Systematic Investment Plan (SIP) uses monthly compound interest mathematics and rupee-cost averaging to build long-term wealth.",
+    shortAnswer: "A Systematic Investment Plan uses compound interest math and rupee-cost averaging to build wealth.",
     contentHtml: `
       <h2>1. The Mathematics of SIP Compounding</h2>
-      <p>SIP allows deploying fixed sums into equity mutual funds at regular monthly intervals.</p>
+      <p>SIP deploys fixed monthly sums into equity mutual funds.</p>
     `,
     faqs: [
       {
-        question: "What is realistic Nifty 50 CAGR?",
+        question: "Realistic Nifty CAGR?",
         answer: "Historically 11% to 13% CAGR over 15+ years."
       }
     ],
@@ -461,7 +495,7 @@ def calculate_rsi(data, period=14):
     ]
   },
 
-  // 10. OPTIONS GREEKS OVERVIEW ARTICLE
+  // 13. OPTIONS GREEKS OVERVIEW ARTICLE
   {
     slug: "understanding-options-greeks-delta-theta-vega",
     title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma Explained",
@@ -472,15 +506,15 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-02-10",
     updatedDate: "2026-08-02",
     readTime: "15 min read",
-    shortAnswer: "Options Greeks measure sensitivity of option price to underlying spot price, time decay, IV, and Delta change rate.",
+    shortAnswer: "Options Greeks measure sensitivity of option price to spot price, time decay, IV, and Delta change rate.",
     contentHtml: `
       <h2>1. What Are Options Greeks?</h2>
       <p>Option contracts trade non-linearly based on Black-Scholes partial derivatives.</p>
     `,
     faqs: [
       {
-        question: "Why does Theta decay accelerate near expiry?",
-        answer: "Extrinsic value is proportional to the square root of remaining time."
+        question: "Why Theta decay accelerates near expiry?",
+        answer: "Extrinsic value is proportional to square root of time remaining."
       }
     ],
     relatedArticles: [
@@ -494,7 +528,7 @@ def calculate_rsi(data, period=14):
     ]
   },
 
-  // 11. FUNDAMENTAL ANALYSIS ARTICLE
+  // 14. FUNDAMENTAL ANALYSIS ARTICLE
   {
     slug: "demystifying-price-to-earnings-pe-ratio",
     title: "Demystifying P/E Ratio: How to Evaluate Valuation Metrics in Indian Stocks",
@@ -505,7 +539,7 @@ def calculate_rsi(data, period=14):
     publishedDate: "2026-03-01",
     updatedDate: "2026-08-03",
     readTime: "10 min read",
-    shortAnswer: "The Price-to-Earnings (P/E) ratio measures share price relative to EPS, showing how many rupees investors pay per ₹1 net profit.",
+    shortAnswer: "The Price-to-Earnings ratio measures share price relative to EPS, showing how many rupees investors pay per ₹1 net profit.",
     contentHtml: `
       <h2>1. The Mathematics of Price-to-Earnings</h2>
       <p>The P/E ratio is the cornerstone metric in stock valuation.</p>
