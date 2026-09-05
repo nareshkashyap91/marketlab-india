@@ -194,23 +194,159 @@ export function PdfToWordConverter() {
     }
   };
 
+  const convertTextToWordHtml = (text: string, title: string): string => {
+    const lines = text.split("\n");
+    let bodyHtml = "";
+    let inList = false;
+    let listType: "ul" | "ol" | null = null;
+    let inTable = false;
+    let tableRows: string[][] = [];
+
+    const flushList = () => {
+      if (inList) {
+        bodyHtml += listType === "ul" ? "</ul>" : "</ol>";
+        inList = false;
+        listType = null;
+      }
+    };
+
+    const flushTable = () => {
+      if (inTable && tableRows.length > 0) {
+        bodyHtml += `<table border="1" style="border-collapse: collapse; width: 100%; margin: 12pt 0; font-family: 'Calibri', Arial, sans-serif; font-size: 10pt;">`;
+        tableRows.forEach((row, rowIndex) => {
+          bodyHtml += "<tr>";
+          row.forEach((cell) => {
+            const isHeader = rowIndex === 0;
+            const tag = isHeader ? "th" : "td";
+            const bgStyle = isHeader ? "background-color: #0284c7; color: #ffffff; font-weight: bold;" : "background-color: #ffffff; color: #1e293b;";
+            bodyHtml += `<${tag} style="border: 1px solid #cbd5e1; padding: 6pt 8pt; ${bgStyle}">${cell.trim()}</${tag}>`;
+          });
+          bodyHtml += "</tr>";
+        });
+        bodyHtml += "</table>";
+        inTable = false;
+        tableRows = [];
+      }
+    };
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+
+      // 1. Check Page Break
+      if (/^\[\s*Page\s+\d+\s*\]$/i.test(trimmed)) {
+        flushList();
+        flushTable();
+        const pageNum = trimmed.replace(/[\[\]]/g, "");
+        bodyHtml += `<div style="page-break-before: always; mso-break-type: page-break; margin-top: 18pt; border-top: 2px solid #0284c7; padding-top: 6pt;">` +
+          `<p style="font-size: 9pt; color: #64748b; font-weight: bold; margin-bottom: 12pt; font-family: 'Calibri', Arial, sans-serif;">${pageNum}</p>` +
+          `</div>`;
+        return;
+      }
+
+      if (!trimmed) {
+        flushList();
+        flushTable();
+        return;
+      }
+
+      // 2. Check Table Row (multi-column tab/spacing)
+      const columns = trimmed.split(/\t+|\s{3,}/);
+      if (columns.length >= 2 && columns.every((c) => c.trim().length > 0)) {
+        flushList();
+        if (!inTable) inTable = true;
+        tableRows.push(columns);
+        return;
+      } else {
+        flushTable();
+      }
+
+      // 3. Check Bullet / Numbered Lists
+      const bulletMatch = trimmed.match(/^([•\-\*])\s+(.+)$/);
+      const numberMatch = trimmed.match(/^(\d+[\.\)])\s+(.+)$/);
+
+      if (bulletMatch) {
+        flushTable();
+        if (!inList || listType !== "ul") {
+          flushList();
+          bodyHtml += `<ul style="margin-left: 20pt; margin-bottom: 8pt; font-family: 'Calibri', Arial, sans-serif;">`;
+          inList = true;
+          listType = "ul";
+        }
+        bodyHtml += `<li style="margin-bottom: 4pt; color: #1e293b; font-size: 11pt;">${bulletMatch[2]}</li>`;
+        return;
+      } else if (numberMatch) {
+        flushTable();
+        if (!inList || listType !== "ol") {
+          flushList();
+          bodyHtml += `<ol style="margin-left: 20pt; margin-bottom: 8pt; font-family: 'Calibri', Arial, sans-serif;">`;
+          inList = true;
+          listType = "ol";
+        }
+        bodyHtml += `<li style="margin-bottom: 4pt; color: #1e293b; font-size: 11pt;">${numberMatch[2]}</li>`;
+        return;
+      } else {
+        flushList();
+      }
+
+      // 4. Headings & Titles
+      const isHeading =
+        (trimmed.length < 60 && !trimmed.endsWith(".") && !trimmed.endsWith(",")) ||
+        (trimmed === trimmed.toUpperCase() && /[A-Z]/.test(trimmed) && trimmed.length < 80);
+
+      if (isHeading) {
+        bodyHtml += `<h2 style="font-size: 14pt; color: #0f172a; font-weight: bold; margin-top: 14pt; margin-bottom: 6pt; font-family: 'Calibri', Arial, sans-serif; border-left: 3px solid #0284c7; padding-left: 6pt;">${trimmed}</h2>`;
+      } else {
+        bodyHtml += `<p style="margin-top: 0; margin-bottom: 8pt; line-height: 1.5; font-size: 11pt; color: #1e293b; text-align: justify; font-family: 'Calibri', Arial, sans-serif;">${trimmed}</p>`;
+      }
+    });
+
+    flushList();
+    flushTable();
+
+    return `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head>
+        <meta charset='utf-8'>
+        <title>${title}</title>
+        <!--[if gte mso 9]>
+        <xml>
+         <w:WordDocument>
+          <w:View>Print</w:View>
+          <w:Zoom>100</w:Zoom>
+          <w:DoNotOptimizeForBrowser/>
+         </w:WordDocument>
+        </xml>
+        <![endif]-->
+        <style>
+          @page { size: 8.5in 11.0in; margin: 1.0in 1.0in 1.0in 1.0in; mso-header-margin: 0.5in; mso-footer-margin: 0.5in; }
+          body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; color: #1e293b; line-height: 1.6; }
+          h1 { font-size: 20pt; color: #0284c7; font-weight: bold; margin-bottom: 4pt; font-family: 'Calibri', Arial, sans-serif; }
+          h2 { font-size: 14pt; color: #0f172a; font-weight: bold; margin-top: 14pt; margin-bottom: 6pt; font-family: 'Calibri', Arial, sans-serif; }
+          p { margin-bottom: 8pt; text-align: justify; line-height: 1.5; }
+          ul, ol { margin-left: 20pt; margin-bottom: 10pt; }
+          li { margin-bottom: 4pt; }
+          table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 10pt; }
+          th, td { border: 1px solid #cbd5e1; padding: 6pt 8pt; text-align: left; }
+          th { background-color: #0284c7; color: #ffffff; font-weight: bold; }
+        </style>
+      </head>
+      <body style="font-family: 'Calibri', Arial, sans-serif; font-size: 11pt; color: #1e293b; padding: 20pt;">
+        <div style="font-family: 'Calibri', Arial, sans-serif;">
+          <h1 style="color: #0284c7; font-size: 20pt; border-bottom: 2px solid #e2e8f0; padding-bottom: 6pt; margin-bottom: 4pt;">${title}</h1>
+          <p style="color: #64748b; font-size: 9pt; margin-top: 0; margin-bottom: 16pt;">Converted online via MarketLab India Free PDF to Word Converter</p>
+          <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 16pt 0;" />
+          ${bodyHtml}
+        </div>
+      </body>
+      </html>
+    `;
+  };
+
   const downloadWordDocx = () => {
     if (!extractedText && !file) return;
 
     const fileName = file ? file.name.replace(/\.pdf$/i, "") : "converted_document";
-    const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Exported Word Document</title></head><body>";
-    const footer = "</body></html>";
-
-    const formattedHtml = `
-      <div style="font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.6; color: #1e293b;">
-        <h1 style="color: #0284c7; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">${fileName}</h1>
-        <p style="color: #64748b; font-size: 9pt;">Converted online via MarketLab India Free PDF to Word Converter</p>
-        <hr style="border: 0; border-top: 1px solid #cbd5e1; margin: 16px 0;" />
-        <div style="white-space: pre-wrap;">${extractedText}</div>
-      </div>
-    `;
-
-    const sourceHTML = header + formattedHtml + footer;
+    const sourceHTML = convertTextToWordHtml(extractedText, fileName);
     const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
 
     const fileDownload = document.createElement("a");
