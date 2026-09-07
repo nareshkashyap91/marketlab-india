@@ -559,5 +559,103 @@ in
     sources: [
       "Graham & Dodd (1934)."
     ]
+  },
+
+  // 15. SEBI NEW INDEX DERIVATIVES & ALGO RULES 2026
+  {
+    slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide",
+    title: "SEBI New Index Derivatives & Algo Rules 2026: Impact on Weekly Expiries, Lot Sizes & Retail Strategies",
+    category: "Daily Market Updates",
+    categorySlug: "daily-market-updates",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-07",
+    updatedDate: "2026-09-07",
+    readTime: "14 min read",
+    shortAnswer: "SEBI's 2026 index derivative regulatory framework introduces unified weekly benchmark expiries, increased minimum contract sizes to ₹15-20 Lakhs, upfront intraday margin collection, and automated algo order rate limits to safeguard retail capital and curb speculative volatility.",
+    contentHtml: `
+      <h2>1. Overview of SEBI's 2026 Derivatives Framework</h2>
+      <p>The Securities and Exchange Board of India (SEBI) has finalized landmark regulatory changes aimed at strengthening risk management across Equity Index Derivatives (Options & Futures) on the NSE and BSE. These measures address the rapid expansion of retail option buying and zero-day-to-expiry (0DTE) speculative activity.</p>
+      
+      <h2>2. Key Structural Changes & Rule Summary</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>One Weekly Benchmark Expiry Per Exchange:</strong> Exchanges are permitted to offer weekly options contracts on only ONE primary benchmark index (e.g., Nifty 50 on NSE, Sensex on BSE). Secondary index weekly contracts (like BankNifty, Midcap Nifty, Sensex 50) have been rationalized to monthly cycles.</li>
+        <li><strong>Increased Minimum Contract Value:</strong> Contract size floor has been raised from ₹5 Lakhs to ₹15–20 Lakhs. Lot sizes for Nifty and BankNifty contracts have been recalibrated to ensure higher entry capital requirements for option writers and buyers alike.</li>
+        <li><strong>Upfront Option Premium Collection:</strong> Brokers must collect 100% upfront option buyer premium prior to order execution to eliminate intraday leverage extensions.</li>
+        <li><strong>Extreme Loss Margin (ELM) Surcharge:</strong> An additional 2% ELM buffer is levied on short option positions on expiry days to absorb tail-risk gamma squeezes.</li>
+      </ul>
+
+      <h2>3. Impact on Retail Traders & Quantitative Algos</h2>
+      <p>Quantitative traders and algorithmic systems must adapt to structural changes in implied volatility (IV) surfaces and intraday liquidity distribution:</p>
+
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Margin Required = Max( Initial Margin + ELM Surcharge, Upfront Option Premium )
+      </div>
+
+      <p>Because weekly option liquidity is now concentrated into single flagship expiry days (Thursdays for NSE Nifty 50 and Fridays for BSE Sensex), intraday theta decay curves have become steeper during afternoon sessions (2:00 PM – 3:30 PM IST).</p>
+
+      <h2>4. Python Code: Simulating Expiry Day Volatility & Margin Calculation</h2>
+      <pre><code>import numpy as np
+import pandas as pd
+
+def calculate_sebi_option_margin(spot_price, strike_price, option_premium, lot_size, is_short=True):
+    """
+    Calculates required margin under SEBI 2026 2% ELM Surcharge rules.
+    """
+    contract_value = spot_price * lot_size
+    base_span_margin = contract_value * 0.12  # ~12% SPAN margin estimate
+    elm_surcharge = contract_value * 0.02    # 2% SEBI Expiry Surcharge
+    
+    if is_short:
+        total_margin = base_span_margin + elm_surcharge + (option_premium * lot_size)
+    else:
+        total_margin = option_premium * lot_size  # Upfront premium
+        
+    return {
+        "Contract Value (INR)": contract_value,
+        "Total Margin Required (INR)": round(total_margin, 2),
+        "Upfront Cushion (INR)": round(elm_surcharge, 2)
+    }
+
+# Example Calculation for Nifty 50 Short Call at 24,500
+result = calculate_sebi_option_margin(spot_price=24500, strike_price=24500, option_premium=85, lot_size=25, is_short=True)
+print(result)
+</code></pre>
+
+      <h2>5. Recommended Trader Action Plan</h2>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><strong>Adjust Position Sizing:</strong> Higher lot size values require recalculating risk per trade. Ensure no single option trade exceeds 2% of total trading account equity.</li>
+        <li><strong>Shift to Spread Strategies:</strong> Credit spreads (Bull Put / Bear Call) and Iron Condors defined-risk setups shield option sellers from uncapped margin spikes.</li>
+        <li><strong>Monitor Broker Order API Rate Limits:</strong> Algo traders on Zerodha, Angel One, or Upstox must comply with SEBI's 20 orders per second rate limit per client ID.</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        question: "When did SEBI's new index derivative rules take full effect?",
+        answer: "The phased rollout began in late 2024 and mid-2025, with final lot size and single-weekly-expiry mandates fully enforced for 2026."
+      },
+      {
+        question: "Can retail traders still buy out-of-the-money (OTM) options on expiry days?",
+        answer: "Yes, but deep OTM strikes beyond SEBI's specified price bands may have restricted order placement to prevent illiquid gamma manipulation."
+      },
+      {
+        question: "How does this affect automated Python algo strategies?",
+        answer: "Algo traders must update lot size parameters in API code and incorporate strict margin buffer checks before placing automated order bursts."
+      }
+    ],
+    relatedArticles: [
+      { title: "Understanding Options Greeks: Delta, Theta, Vega & Gamma", slug: "understanding-options-greeks-delta-theta-vega" },
+      { title: "Mastering Swing Trading Setups", slug: "swing-trading-setups-price-action-risk-reward-guide" },
+      { title: "Chartink Screener Formulas & Volume Scanners", slug: "chartink-screener-formulas-volume-breakout-guide" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "SEBI Master Circular for Stock Exchanges and Clearing Corporations on Derivatives, 2025/2026.",
+      "National Stock Exchange (NSE) Circular on Revision of Lot Sizes for Index Options.",
+      "Hull, John C. Options, Futures, and Other Derivatives. Pearson, 11th Edition."
+    ]
   }
 ];
