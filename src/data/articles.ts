@@ -657,5 +657,97 @@ print(result)
       "National Stock Exchange (NSE) Circular on Revision of Lot Sizes for Index Options.",
       "Hull, John C. Options, Futures, and Other Derivatives. Pearson, 11th Edition."
     ]
+  },
+
+  // 16. AI & MACHINE LEARNING IN ALGO TRADING
+  {
+    slug: "ai-machine-learning-python-xgboost-lstm-trading-guide",
+    title: "AI & Machine Learning in Indian Algo Trading: Building Python XGBoost & Feature Engineering Models",
+    category: "Algo Trading",
+    categorySlug: "algo-trading",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-09-07",
+    updatedDate: "2026-09-07",
+    readTime: "16 min read",
+    shortAnswer: "Applying Machine Learning to Indian stock trading requires domain-driven feature engineering (technical momentum, volatility spread, order flow imbalance) combined with gradient-boosted decision trees (XGBoost) and walk-forward validation to eliminate lookahead bias.",
+    contentHtml: `
+      <h2>1. Why Traditional Moving Averages Fail in High-Frequency Regimes</h2>
+      <p>Simple crossover strategies suffer from lag and whipsaws in sideways Indian markets. Modern quantitative funds utilize supervised machine learning models to capture non-linear interactions across technical indicators, option chain IV skew, and institutional order flow.</p>
+
+      <h2>2. Feature Engineering Pipeline for Nifty 50</h2>
+      <p>High-predictive features combine price momentum, volatility ratio, and volume velocity:</p>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>RSI Velocity (5-day ΔRSI):</strong> Captures rate of acceleration in momentum before price breakouts occur.</li>
+        <li><strong>Bollinger Band Width Ratio:</strong> Measures volatility compression (squeeze setups) prior to explosive directional moves.</li>
+        <li><strong>Relative Volume Ratio (RVOL):</strong> Measures current bar volume against the 20-day trailing volume median.</li>
+      </ul>
+
+      <h2>3. Executable Python Code: XGBoost Directional Classifier</h2>
+      <pre><code>import numpy as np
+import pandas as pd
+from xgboost import XGBClassifier
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.metrics import accuracy_score, classification_report
+
+def create_ml_features(df):
+    """
+    Computes technical features and target binary directional label.
+    """
+    df = df.copy()
+    
+    # Feature 1: Log Returns
+    df['Log_Ret'] = np.log(df['Close'] / df['Close'].shift(1))
+    
+    # Feature 2: Volatility (20-day rolling std)
+    df['Vol_20'] = df['Log_Ret'].rolling(20).std()
+    
+    # Feature 3: Volume Ratio
+    df['RVOL'] = df['Volume'] / df['Volume'].rolling(20).median()
+    
+    # Target: 1 if Next Day Close > Today Close else 0
+    df['Target'] = (df['Close'].shift(-1) > df['Close']).astype(int)
+    
+    return df.dropna()
+
+# Simulated Training Workflow
+# X = df[['Log_Ret', 'Vol_20', 'RVOL']]
+# y = df['Target']
+# model = XGBClassifier(n_estimators=100, max_depth=3, learning_rate=0.05)
+# model.fit(X_train, y_train)
+</code></pre>
+
+      <h2>4. Overfitting Prevention & Purged Walk-Forward Cross Validation</h2>
+      <p>Standard k-fold cross-validation corrupts financial time series due to temporal leakage. Quant traders must implement <strong>TimeSeriesSplit</strong> with purging and embargo intervals to prevent test data leakage into training folds.</p>
+
+      <h2>5. Performance Metrics & Strategy Guidelines</h2>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><strong>Sharpe Ratio Floor:</strong> Target an annualized Sharpe Ratio > 1.5 in out-of-sample backtesting.</li>
+        <li><strong>Max Drawdown Control:</strong> Set a hard stop-loss trigger at 10% portfolio equity drawdown.</li>
+        <li><strong>Execution Friction:</strong> Account for 0.05% slippage + STT (Securities Transaction Tax) in all backtested trades.</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        question: "Which algorithm performs best for daily stock prediction: XGBoost or LSTM?",
+        answer: "XGBoost consistently outperforms LSTM on tabular daily price data due to lower variance and resistance to overfitting on noisy financial signals."
+      },
+      {
+        question: "How much historical data is required to train an Indian stock ML model?",
+        answer: "5 to 10 years of daily candlestick data (incorporating bull, bear, and sideways regimes) is recommended to ensure robust out-of-sample generalization."
+      }
+    ],
+    relatedArticles: [
+      { title: "SEBI New Index Derivatives & Algo Rules 2026", slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide" },
+      { title: "Chartink Screener Formulas & Volume Scanners", slug: "chartink-screener-formulas-volume-breakout-guide" }
+    ],
+    relatedTools: [
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" },
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
+    ],
+    sources: [
+      "De Prado, Marcos López. Advances in Financial Machine Learning. Wiley, 2018.",
+      "Chen, Tianqi, and Carlos Guestrin. 'XGBoost: A Scalable Tree Boosting System.' ACM SIGKDD, 2016."
+    ]
   }
 ];
