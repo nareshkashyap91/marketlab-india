@@ -867,5 +867,566 @@ def calculate_capital_gains_and_harvesting(pnl_df):
       "Income Tax Department of India, Tax Rates & Capital Gains Guidelines FY 2025-26.",
       "Union Budget Equity Capital Gains Tax Notification, Ministry of Finance, Govt of India."
     ]
+  },
+
+  // 18. CPR TRADING STRATEGY
+  {
+    slug: "cpr-trading-strategy-nifty-banknifty-intraday-guide",
+    title: "CPR (Central Pivot Range) Trading Strategy: Nifty 50 & BankNifty Intraday Reversal Setup",
+    category: "Technical Analysis",
+    categorySlug: "technical-analysis",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "12 min read",
+    shortAnswer: "Central Pivot Range (CPR) is a technical indicator derived from high, low, and close prices of the previous trading day. A narrow CPR indicates a high-probability trending breakout day, while a wide CPR signals a sideways range-bound market for Nifty 50 and BankNifty intraday trading.",
+    contentHtml: `
+      <h2>1. What is Central Pivot Range (CPR)?</h2>
+      <p>Central Pivot Range (CPR) is one of the most powerful leading intraday indicators used by professional Indian traders. Unlike lagging indicators like moving averages, CPR calculates static support and resistance levels before the market opens.</p>
+      
+      <h2>2. CPR Calculation Formulas</h2>
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Pivot (P) = ( High + Low + Close ) / 3<br>
+        Bottom Central Pivot (BC) = ( High + Low ) / 2<br>
+        Top Central Pivot (TC) = ( Pivot - BC ) + Pivot
+      </div>
+
+      <h2>3. The 3 Core CPR Intraday Patterns</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Narrow CPR:</strong> Indicates low volatility on the previous day. Expect a strong directional breakout or trending move in Nifty or BankNifty.</li>
+        <li><strong>Wide CPR:</strong> Indicates high volatility on the previous day. Expect prices to oscillate within the range, creating ideal setups for option sellers.</li>
+        <li><strong>Virgin CPR:</strong> A CPR range where price does not touch or cross during the entire trading session. Acts as strong support/resistance in subsequent sessions.</li>
+      </ul>
+
+      <h2>4. Python Code: Automated CPR Calculator</h2>
+      <pre><code>def calculate_cpr(high, low, close):
+    pivot = (high + low + close) / 3.0
+    bc = (high + low) / 2.0
+    tc = (pivot - bc) + pivot
+    
+    # Ensure TC is top and BC is bottom
+    top_pivot = max(tc, bc)
+    bottom_pivot = min(tc, bc)
+    
+    width_pct = ((top_pivot - bottom_pivot) / pivot) * 100
+    cpr_type = "Narrow" if width_pct < 0.25 else "Wide"
+    
+    return {
+        'Pivot': round(pivot, 2),
+        'TC': round(top_pivot, 2),
+        'BC': round(bottom_pivot, 2),
+        'Width_Pct': round(width_pct, 4),
+        'Type': cpr_type
+    }
+
+# Example Nifty Previous Day: High=24800, Low=24600, Close=24750
+print(calculate_cpr(24800, 24600, 24750))
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "How do you trade a Narrow CPR in BankNifty?",
+        answer: "When BankNifty opens above a Narrow CPR, wait for a 5-minute candle to close above TC and enter long with a stop-loss below BC."
+      },
+      {
+        question: "What is a Virgin CPR in stock trading?",
+        answer: "A Virgin CPR occurs when price never touches the CPR boundaries during the day. It acts as a powerful magnetic support/resistance zone for future sessions."
+      }
+    ],
+    relatedArticles: [
+      { title: "Swing Trading Setups & Price Action", slug: "swing-trading-setups-price-action-risk-reward-guide" },
+      { title: "Relative Strength Index (RSI) Guide", slug: "relative-strength-index-rsi-guide" }
+    ],
+    relatedTools: [
+      { name: "CPR Calculator", slug: "cpr-calculator" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "Person, John L. Candlestick and Pivot Point Trading Triggers. Wiley, 2020.",
+      "NSE India Historical Daily Bhavcopy Data."
+    ]
+  },
+
+  // 19. BROKERAGE CHARGES COMPARISON 2026
+  {
+    slug: "zerodha-vs-groww-vs-angel-one-brokerage-charges-2026-comparison",
+    title: "Zerodha vs Groww vs Angel One Brokerage Charges 2026: F&O, Delivery & Hidden Fee Comparison",
+    category: "Daily Market Updates",
+    categorySlug: "daily-market-updates",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "11 min read",
+    shortAnswer: "Zerodha, Groww, and Angel One are India's top discount brokers. While equity delivery is ₹0 brokerage on Zerodha and Angel One, intraday and F&O trades incur flat ₹20 per executed order across all three brokers. Understanding STT, GST, and SEBI turnover charges is critical for calculating net trading profitability.",
+    contentHtml: `
+      <h2>1. Brokerage & Fee Structure Overview for 2026</h2>
+      <p>Selecting the right discount broker impacts your net trading returns, especially for high-frequency intraday and options traders. Below is a detailed breakdown of transaction costs across Zerodha, Groww, and Angel One.</p>
+      
+      <h2>2. Detailed Brokerage Comparison Matrix</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Equity Delivery:</strong> Zerodha (₹0), Angel One (₹0), Groww (₹20 or 0.05% whichever is lower).</li>
+        <li><strong>Intraday Equity:</strong> Flat ₹20 or 0.03% across Zerodha, Groww, and Angel One.</li>
+        <li><strong>Futures & Options (F&O):</strong> Flat ₹20 per executed order across all three discount brokers.</li>
+        <li><strong>Account Opening Fee:</strong> Zerodha (₹200 for Trading+Demat), Groww (₹0), Angel One (₹0).</li>
+        <li><strong>Demat AMC (Annual Maintenance Charge):</strong> Zerodha (₹300/year), Groww (₹0), Angel One (₹240/year waived for 1st year).</li>
+      </ul>
+
+      <h2>3. Regulatory Taxes & Government Levies Breakdown</h2>
+      <p>In addition to broker fees, traders pay mandatory government taxes:</p>
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Total Cost = Brokerage + STT (0.1% Delivery / 0.0625% Options Sell) + Exchange Charges + GST (18%) + SEBI Charges + Stamp Duty
+      </div>
+
+      <h2>4. Python Code: Total Brokerage & Tax Calculator</h2>
+      <pre><code>def calculate_trade_charges(turnover, trade_type="options_sell", brokerage=20):
+    stt = turnover * 0.000625 if trade_type == "options_sell" else turnover * 0.001
+    exc_charge = turnover * 0.0005
+    gst = (brokerage + exc_charge) * 0.18
+    sebi_fee = turnover * 0.000001
+    
+    total_charges = brokerage + stt + exc_charge + gst + sebi_fee
+    return round(total_charges, 2)
+
+# Example: Selling ₹5,00,000 worth of Nifty Options
+print("Total Tax & Fee:", calculate_trade_charges(500000, "options_sell"))
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "Which broker is cheapest for options trading in India?",
+        answer: "Zerodha, Groww, and Angel One all charge a flat ₹20 per order for equity options trading."
+      },
+      {
+        question: "What is the STT charge on option buying vs option selling in India?",
+        answer: "Option buying incurs 0% STT on premium, whereas Option selling (shorting) incurs 0.0625% STT on the premium turnover."
+      }
+    ],
+    relatedArticles: [
+      { title: "Capital Gains Tax Rules 2026 & Tax Harvesting", slug: "capital-gains-tax-stcg-ltcg-rules-2026-tax-harvesting-guide" },
+      { title: "SEBI New Index Derivatives & Algo Rules 2026", slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "NSE India Schedule of Charges & Government Stamp Duty Rates, 2026.",
+      "Brokerage Tariff Sheets: Zerodha Broking Ltd, Groww (Nextbillion Technology), Angel One Ltd."
+    ]
+  },
+
+  // 20. OPTIONS OPEN INTEREST & PCR ANALYSIS
+  {
+    slug: "options-open-interest-pcr-ratio-analysis-smart-money-guide",
+    title: "Options Open Interest (OI) & Put Call Ratio (PCR) Analysis: Spot Institutional Smart Money",
+    category: "Options Education",
+    categorySlug: "options-education",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "15 min read",
+    shortAnswer: "Open Interest (OI) represents the total number of outstanding derivative contracts. Analyzing Put-Call Ratio (PCR) alongside Change in Open Interest helps traders identify institutional support/resistance levels and predict short-term trend reversals in Nifty and BankNifty.",
+    contentHtml: `
+      <h2>1. Understanding Open Interest (OI) vs Volume</h2>
+      <p>While volume measures the total number of contracts traded during a session, Open Interest measures active open contracts held overnight by traders and institutional option writers.</p>
+
+      <h2>2. Interpretation of Price vs Open Interest (OI) Signals</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Long Buildup:</strong> Price Increases + Open Interest Increases. Strong bullish trend.</li>
+        <li><strong>Short Buildup:</strong> Price Decreases + Open Interest Increases. Strong bearish pressure.</li>
+        <li><strong>Short Covering:</strong> Price Increases + Open Interest Decreases. Short sellers exiting, bullish bounce.</li>
+        <li><strong>Long Unwinding:</strong> Price Decreases + Open Interest Decreases. Long holders taking profit, short-term pullback.</li>
+      </ul>
+
+      <h2>3. Put-Call Ratio (PCR) Trading Rules</h2>
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Put Call Ratio (PCR) = Total Put Open Interest / Total Call Open Interest
+      </div>
+      <p>PCR > 1.3 indicates an oversold/bullish signal (heavy put writing support), while PCR < 0.7 signals an overbought/bearish market condition.</p>
+
+      <h2>4. Python Code: Real-Time PCR & OI Analyzer</h2>
+      <pre><code>def analyze_pcr_sentiment(total_put_oi, total_call_oi):
+    pcr = total_put_oi / float(total_call_oi)
+    
+    if pcr > 1.3:
+        sentiment = "Extremely Bullish / Oversold (Put Writer Support)"
+    elif pcr < 0.7:
+        sentiment = "Extremely Bearish / Overbought (Call Resistance)"
+    else:
+        sentiment = "Neutral / Range-Bound"
+        
+    return round(pcr, 3), sentiment
+
+print(analyze_pcr_sentiment(12500000, 8500000))
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "What does high Call Open Interest at a strike price mean?",
+        answer: "A strike price with the highest Call Open Interest acts as a major resistance level because institutional option writers defend that level."
+      },
+      {
+        question: "How often is NSE Open Interest data updated?",
+        answer: "NSE publishes snapshot Open Interest data every 3 minutes for public feeds and real-time tick data for direct API feeds."
+      }
+    ],
+    relatedArticles: [
+      { title: "Understanding Options Greeks Guide", slug: "understanding-options-greeks-delta-theta-vega" },
+      { title: "SEBI New Index Derivatives Rules 2026", slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" },
+      { name: "RSI Calculator", slug: "rsi-calculator" }
+    ],
+    sources: [
+      "Hull, John C. Options, Futures, and Other Derivatives. Pearson, 2021.",
+      "NSE India Derivative Open Interest & Option Chain Analytics."
+    ]
+  },
+
+  // 21. TOP CANDLESTICK PATTERNS FOR INTRADAY
+  {
+    slug: "best-candlestick-patterns-intraday-trading-indian-stocks",
+    title: "Top 5 Candlestick Patterns for Intraday Trading in Indian Stock Market",
+    category: "Technical Analysis",
+    categorySlug: "technical-analysis",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "10 min read",
+    shortAnswer: "Mastering high-probability intraday candlestick patterns like Bullish Engulfing, Hammer, Shooting Star, Morning Star, and Doji combined with volume confirmation boosts win-rates for day trading Indian equities and index futures.",
+    contentHtml: `
+      <h2>1. Importance of Price Action & Candlestick Patterns</h2>
+      <p>Candlestick charts display the emotional battle between buyers and sellers over specific timeframes. Intraday day traders use 5-minute and 15-minute timeframe candles to spot immediate reversal and continuation setups.</p>
+
+      <h2>2. Top 5 Intraday Candlestick Patterns</h2>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><strong>Hammer (Bullish Reversal):</strong> Forms after a downtrend with a long lower shadow (at least 2x body length). Shows buyers aggressively pushing back.</li>
+        <li><strong>Shooting Star (Bearish Reversal):</strong> Forms at the top of an uptrend with a long upper shadow. Signals heavy rejection from sellers.</li>
+        <li><strong>Bullish Engulfing:</strong> A large green candle completely covers the body of the previous red candle, indicating strong momentum shift.</li>
+        <li><strong>Bearish Engulfing:</strong> A large red candle completely engulfs the prior green candle, signaling institutional distribution.</li>
+        <li><strong>Doji / Spinning Top:</strong> Small real body indicating indecision between bulls and bears. A breakout beyond Doji high/low defines direction.</li>
+      </ol>
+
+      <h2>3. Python Code: Automated Candlestick Pattern Detector</h2>
+      <pre><code>def detect_hammer(open_p, high, low, close):
+    body = abs(close - open_p)
+    lower_wick = min(open_p, close) - low
+    upper_wick = high - max(open_p, close)
+    
+    is_hammer = (lower_wick >= 2 * body) and (upper_wick <= body * 0.5)
+    return is_hammer
+
+# Example Candle: Open=100, High=101, Low=90, Close=99
+print("Is Hammer Pattern:", detect_hammer(100, 101, 90, 99))
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "Which timeframe is best for intraday candlestick patterns?",
+        answer: "The 5-minute timeframe is ideal for entry timing, while the 15-minute timeframe provides cleaner trend validation."
+      },
+      {
+        question: "Should you trade candlestick patterns without volume?",
+        answer: "No. Always demand volume confirmation; breakouts accompanied by 1.5x average volume have significantly higher success rates."
+      }
+    ],
+    relatedArticles: [
+      { title: "CPR Trading Strategy Guide", slug: "cpr-trading-strategy-nifty-banknifty-intraday-guide" },
+      { title: "Swing Trading Setups & Price Action", slug: "swing-trading-setups-price-action-risk-reward-guide" }
+    ],
+    relatedTools: [
+      { name: "Candlestick Tool", slug: "candlestick-tool" },
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "Nison, Steve. Japanese Candlestick Charting Techniques. New York Institute of Finance, 2001."
+    ]
+  },
+
+  // 22. PYTHON OPTION CHAIN SCREENER
+  {
+    slug: "python-option-chain-screener-nse-india-api-guide",
+    title: "How to Build a Python NSE Option Chain Scanner for Live Nifty & BankNifty Data",
+    category: "Python for Trading",
+    categorySlug: "python-for-trading",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "16 min read",
+    shortAnswer: "Learn how to fetch live option chain JSON data from NSE India using Python requests, extract Call/Put Open Interest, calculate Max Pain, and filter strike prices for algorithmic trading strategies.",
+    contentHtml: `
+      <h2>1. Introduction to Automated Option Chain Data Fetching</h2>
+      <p>Tracking live Option Chain metrics gives traders an edge in identifying institutional support and resistance zones. Python allows you to automate JSON parsing from exchange endpoints.</p>
+
+      <h2>2. Python Script: Fetch & Parse NSE Option Chain</h2>
+      <pre><code>import requests
+import pandas as pd
+
+def fetch_nse_option_chain(symbol="NIFTY"):
+    url = f"https://www.nseindia.com/api/option-chain-indices?symbol={symbol}"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+    }
+    
+    session = requests.Session()
+    session.get("https://www.nseindia.com", headers=headers)
+    response = session.get(url, headers=headers)
+    
+    data = response.json()
+    records = data['records']['data']
+    
+    parsed = []
+    for item in records:
+        strike = item.get('strikePrice')
+        ce = item.get('CE', {})
+        pe = item.get('PE', {})
+        
+        parsed.append({
+            'Strike': strike,
+            'CE_OI': ce.get('openInterest', 0),
+            'CE_IV': ce.get('impliedVolatility', 0),
+            'PE_OI': pe.get('openInterest', 0),
+            'PE_IV': pe.get('impliedVolatility', 0)
+        })
+        
+    return pd.DataFrame(parsed)
+
+# df_oc = fetch_nse_option_chain("NIFTY")
+# print(df_oc.head())
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "Why does requests.get() fail on NSE India website?",
+        answer: "NSE requires valid browser session cookies and headers. First visit the home page using requests.Session() before requesting API endpoints."
+      }
+    ],
+    relatedArticles: [
+      { title: "Options Open Interest & PCR Analysis", slug: "options-open-interest-pcr-ratio-analysis-smart-money-guide" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
+    ],
+    sources: [
+      "NSE India Official Developer & Public API Reference."
+    ]
+  },
+
+  // 23. SIP VS LUMPSUM INVESTING
+  {
+    slug: "sip-vs-lumpsum-investing-xirr-vs-cagr-guide",
+    title: "SIP vs Lumpsum Mutual Fund Investing 2026: XIRR vs CAGR Performance & Wealth Calculation",
+    category: "Stock Market Basics",
+    categorySlug: "stock-market-basics",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "11 min read",
+    shortAnswer: "SIP (Systematic Investment Plan) averages purchase costs during market downturns (Rupee Cost Averaging), making it ideal for volatile markets. Lumpsum investing yields higher returns when entering at market bottoms. XIRR is the correct metric for SIP returns, whereas CAGR measures single lumpsum returns.",
+    contentHtml: `
+      <h2>1. SIP vs Lumpsum: Core Comparison</h2>
+      <p>Both SIP and Lumpsum strategies help investors build wealth through equity mutual funds and index funds. Understanding when to deploy cash versus staggered monthly investments optimizes portfolio risk.</p>
+
+      <h2>2. Understanding CAGR vs XIRR Return Metrics</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>CAGR (Compound Annual Growth Rate):</strong> Measures return for single cash flow investments (Lumpsum) over multiple years.</li>
+        <li><strong>XIRR (Extended Internal Rate of Return):</strong> Measures real annual return for multiple staggered cash flows (Monthly SIPs).</li>
+      </ul>
+
+      <h2>3. Python Code: SIP Wealth & Future Value Calculator</h2>
+      <pre><code>def calculate_sip_future_value(monthly_amt, annual_rate_pct, years):
+    i = (annual_rate_pct / 100.0) / 12.0
+    n = years * 12
+    fv = monthly_amt * (((1 + i)**n - 1) / i) * (1 + i)
+    total_invested = monthly_amt * n
+    wealth_gain = fv - total_invested
+    
+    return round(total_invested, 2), round(fv, 2), round(wealth_gain, 2)
+
+print("SIP Output (10k/mo, 12%, 15yrs):", calculate_sip_future_value(10000, 12, 15))
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "Is XIRR higher than CAGR in a bull market?",
+        answer: "Yes, because recent cash flows in a bull market experience quick compounding, elevating XIRR returns."
+      }
+    ],
+    relatedArticles: [
+      { title: "Capital Gains Tax Rules 2026 & Tax Harvesting", slug: "capital-gains-tax-stcg-ltcg-rules-2026-tax-harvesting-guide" }
+    ],
+    relatedTools: [
+      { name: "SIP Calculator", slug: "sip-calculator" },
+      { name: "CAGR Calculator", slug: "cagr-calculator" }
+    ],
+    sources: [
+      "Bogle, John C. The Little Book of Common Sense Investing. Wiley, 2017."
+    ]
+  },
+
+  // 24. SUPERTREND INDICATOR STRATEGY
+  {
+    slug: "supertrend-indicator-strategy-tradingview-intraday-guide",
+    title: "Supertrend Indicator Strategy on TradingView: Multi-Timeframe Intraday & Swing Rules",
+    category: "Technical Analysis",
+    categorySlug: "technical-analysis",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "12 min read",
+    shortAnswer: "The Supertrend indicator is a trend-following overlay based on Average True Range (ATR). Combining Supertrend (10, 3) with a 200 EMA trend filter eliminates whipsaws in intraday and swing trading.",
+    contentHtml: `
+      <h2>1. How the Supertrend Indicator Works</h2>
+      <p>Supertrend constructs dynamic trailing stop-loss lines above or below price based on ATR volatility multiplier settings.</p>
+
+      <h2>2. Python Code: Supertrend Calculation</h2>
+      <pre><code>import pandas as pd
+import numpy as np
+
+def calculate_supertrend(df, period=10, multiplier=3):
+    df['ATR'] = df['High'].comb(df['Low'], max) - df['Low'] # simplified ATR
+    hl2 = (df['High'] + df['Low']) / 2.0
+    df['Upperband'] = hl2 + (multiplier * df['ATR'])
+    df['Lowerband'] = hl2 - (multiplier * df['ATR'])
+    return df
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "What are the best Supertrend settings for intraday trading?",
+        answer: "Period 10 and Multiplier 3 (or 7, 2 for scalping) are widely used for intraday 5-minute charts."
+      }
+    ],
+    relatedArticles: [
+      { title: "Chartink Screener Formulas & Volume Scanners", slug: "chartink-screener-formulas-volume-breakout-guide" }
+    ],
+    relatedTools: [
+      { name: "RSI Calculator", slug: "rsi-calculator" }
+    ],
+    sources: [
+      "Kaufman, Perry J. Trading Systems and Methods. Wiley, 2019."
+    ]
+  },
+
+  // 25. READ BALANCE SHEETS OF INDIAN STOCKS
+  {
+    slug: "how-to-read-balance-sheet-cash-flow-statement-indian-stocks",
+    title: "How to Read Balance Sheets & Cash Flow Statements of Indian Public Companies",
+    category: "Fundamental Analysis",
+    categorySlug: "fundamental-analysis",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "14 min read",
+    shortAnswer: "Analyzing balance sheets and cash flow statements reveals a company's financial solvency, debt burdens, Return on Equity (ROE), and Operating Cash Flow (CFO). Ensuring CFO > Net Profit filters out accounting manipulation.",
+    contentHtml: `
+      <h2>1. Understanding the 3 Main Financial Statements</h2>
+      <p>Fundamental analysis requires evaluating the Income Statement, Balance Sheet, and Cash Flow Statement to confirm financial strength before investing long-term.</p>
+    `,
+    faqs: [
+      {
+        question: "Why is Operating Cash Flow (CFO) more important than Net Profit?",
+        answer: "Net profit can be manipulated through accrual accounting, but CFO measures actual cash collected from core business operations."
+      }
+    ],
+    relatedArticles: [
+      { title: "Demystifying Price-to-Earnings (P/E) Ratio", slug: "demystifying-price-to-earnings-pe-ratio" }
+    ],
+    relatedTools: [
+      { name: "CAGR Calculator", slug: "cagr-calculator" }
+    ],
+    sources: [
+      "Damodaran, Aswath. Investment Valuation. Wiley, 2012."
+    ]
+  },
+
+  // 26. OPTION BUYING VS OPTION SELLING
+  {
+    slug: "option-buying-vs-option-selling-risk-reward-winrate-guide",
+    title: "Option Buying vs Option Selling in Indian Stock Market: Win Rate, Risk & Capital Analysis",
+    category: "Options Education",
+    categorySlug: "options-education",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "13 min read",
+    shortAnswer: "Option buyers have limited risk and unlimited reward with lower win rates (~33%), whereas Option sellers have high win rates (~67%) backed by Theta time decay, but require higher margin capital and strict risk management.",
+    contentHtml: `
+      <h2>1. Structural Dynamics: Buyer vs Seller</h2>
+      <p>Option buyers purchase asymmetric rights, whereas option sellers collect upfront premium income and profit from time decay.</p>
+    `,
+    faqs: [
+      {
+        question: "Which is better for small capital accounts: Option buying or selling?",
+        answer: "Option buying requires low capital (e.g. ₹5,000), but Option selling requires ₹1 Lakh+ margin per lot unless defined-risk spreads (Hedges) are deployed."
+      }
+    ],
+    relatedArticles: [
+      { title: "Understanding Options Greeks Guide", slug: "understanding-options-greeks-delta-theta-vega" }
+    ],
+    relatedTools: [
+      { name: "Option Payoff Calculator", slug: "option-payoff-calculator" }
+    ],
+    sources: [
+      "Natenberg, Sheldon. Option Volatility and Pricing. McGraw-Hill, 2014."
+    ]
+  },
+
+  // 27. AUTOMATED BACKTESTING IN PYTHON
+  {
+    slug: "python-automated-backtesting-backtrader-vectorbt-nse-guide",
+    title: "Automated Backtesting in Python using Backtrader & Vectorbt for NSE Equity & Futures Data",
+    category: "Algo Trading",
+    categorySlug: "algo-trading",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "15 min read",
+    shortAnswer: "Backtesting algorithm strategies in Python using Vectorbt or Backtrader allows quantitative traders to evaluate Sharpe Ratios, maximum drawdown, win rates, and transaction costs on historical NSE market data.",
+    contentHtml: `
+      <h2>1. Introduction to Vectorbt Vectorized Backtesting</h2>
+      <p>Vectorbt enables high-speed vectorized strategy simulation across thousands of stocks simultaneously.</p>
+
+      <h2>2. Python Code: Vectorbt Moving Average Crossover</h2>
+      <pre><code>import vectorbt as vbt
+
+# Fast SMA 20 / Slow SMA 50 Crossover
+fast_ma = vbt.MA.run(price, 20)
+slow_ma = vbt.MA.run(price, 50)
+
+entries = fast_ma.ma_crossed_above(slow_ma)
+exits = fast_ma.ma_crossed_below(slow_ma)
+
+portfolio = vbt.Portfolio.from_signals(price, entries, exits, init_cash=100000)
+print(portfolio.stats())
+</code></pre>
+    `,
+    faqs: [
+      {
+        question: "What is look-ahead bias in algorithmic backtesting?",
+        answer: "Look-ahead bias occurs when a strategy uses future price data (e.g. today's close) to execute a trade in historical simulation at open."
+      }
+    ],
+    relatedArticles: [
+      { title: "SEBI New Index Derivatives & Algo Rules 2026", slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide" }
+    ],
+    relatedTools: [
+      { name: "Risk/Reward Calculator", slug: "risk-reward-calculator" }
+    ],
+    sources: [
+      "Vectorbt Documentation & Python Algorithmic Trading Frameworks, 2025."
+    ]
   }
 ];
