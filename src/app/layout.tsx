@@ -6,6 +6,7 @@ import { JsonLdSchema } from "@/components/seo/JsonLdSchema";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://marketlab-india-blog.vercel.app'),
   title: {
     default: "MarketLab India | Indian Stock Market Education & Quantitative Backtesting",
     template: "%s | MarketLab India"

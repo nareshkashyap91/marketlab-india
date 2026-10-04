@@ -4,7 +4,7 @@ import { CATEGORIES } from '@/data/categories';
 import { TOOLS } from '@/data/tools';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://marketlab-india-blog.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://marketlab-india-blog.vercel.app';
 
   const staticPages = [
     '',
@@ -26,29 +26,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: 'daily' as const,
     priority: route === '' ? 1.0 : 0.8,
   }));
 
   const categoryPages = CATEGORIES.map((cat) => ({
     url: `${baseUrl}/categories/${cat.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: 'daily' as const,
     priority: 0.8,
   }));
 
   const toolPages = TOOLS.map((tool) => ({
     url: `${baseUrl}/tools/${tool.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
   }));
 
   const articlePages = ARTICLES.map((art) => ({
     url: `${baseUrl}/articles/${art.slug}`,
     lastModified: new Date(art.updatedDate),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
+    changeFrequency: 'daily' as const,
+    priority: 0.9,
   }));
 
   return [...staticPages, ...categoryPages, ...toolPages, ...articlePages];
