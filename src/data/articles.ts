@@ -749,5 +749,123 @@ def create_ml_features(df):
       "De Prado, Marcos López. Advances in Financial Machine Learning. Wiley, 2018.",
       "Chen, Tianqi, and Carlos Guestrin. 'XGBoost: A Scalable Tree Boosting System.' ACM SIGKDD, 2016."
     ]
+  },
+
+  // 17. VIRAL TOPIC: CAPITAL GAINS TAX (STCG & LTCG) 2026 & TAX HARVESTING GUIDE
+  {
+    slug: "capital-gains-tax-stcg-ltcg-rules-2026-tax-harvesting-guide",
+    title: "Capital Gains Tax (STCG & LTCG) Rules 2026 for Indian Investors: Tax Harvesting Calculator & Strategy",
+    category: "Daily Market Updates",
+    categorySlug: "daily-market-updates",
+    author: "Naresh Kashyap",
+    authorRole: "Founder & Chief Quantitative Analyst",
+    publishedDate: "2026-10-04",
+    updatedDate: "2026-10-04",
+    readTime: "14 min read",
+    shortAnswer: "Under Indian Income Tax rules, equity Short-Term Capital Gains (STCG) are taxed at 20%, while Long-Term Capital Gains (LTCG) over 12 months are taxed at 12.5% above the annual ₹1.25 Lakh exemption threshold. Utilizing Tax Loss Harvesting allows investors to legally offset gains against unrealized losses before March 31st to minimize tax liability.",
+    contentHtml: `
+      <h2>1. Overview of 2026 Capital Gains Tax Structure for Equity & Mutual Funds</h2>
+      <p>Understanding capital gains taxation is essential for every Indian stock market trader and mutual fund investor. Following recent Union Budget tax updates, equity taxation rules have undergone significant adjustments to tax rates and annual exemption limits.</p>
+      
+      <h2>2. Summary of Key Tax Rates for Stock & Mutual Fund Investors</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li><strong>Short-Term Capital Gains (STCG):</strong> Equity holdings sold within 12 months are taxed at a flat rate of <strong>20%</strong> (plus applicable cess and surcharge).</li>
+        <li><strong>Long-Term Capital Gains (LTCG):</strong> Equity holdings held for more than 12 months are taxed at <strong>12.5%</strong> on realized gains exceeding the annual exemption limit of <strong>₹1.25 Lakhs</strong> per financial year.</li>
+        <li><strong>Debt Mutual Funds & F&O Trading:</strong> F&O profits are treated as Non-Speculative Business Income and taxed as per your individual Income Tax slab rate. Debt mutual funds purchased after April 1, 2023 are taxed as per the investor's tax slab regardless of holding period.</li>
+      </ul>
+
+      <h2>3. Tax Loss Harvesting: How to Legally Reduce Your Income Tax Bill</h2>
+      <p>Tax Loss Harvesting is a strategic method where investors sell loss-making stocks or mutual fund units near the end of the financial year (before March 31st) to offset realized capital gains. The sold units can be repurchased immediately or substituted with similar instruments to maintain portfolio asset allocation.</p>
+
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Net Taxable STCG = Total Realized STCG - Realized STCL (Short-Term Capital Loss)
+      </div>
+
+      <div class="math-card p-4 my-4 rounded font-mono text-cyan-400">
+        Net Taxable LTCG = Max( 0, Total Realized LTCG - Realized LTCL - ₹1,25,000 Exemption )
+      </div>
+
+      <h2>4. Key Rules for Set-Off and Carry Forward of Capital Losses</h2>
+      <ol class="list-decimal pl-6 space-y-2">
+        <li><strong>STCL Offset Flexibility:</strong> Short-Term Capital Losses (STCL) can be set off against BOTH Short-Term Capital Gains (STCG) and Long-Term Capital Gains (LTCG).</li>
+        <li><strong>LTCL Restriction:</strong> Long-Term Capital Losses (LTCL) can ONLY be set off against Long-Term Capital Gains (LTCG). They cannot offset STCG.</li>
+        <li><strong>8-Year Carry Forward:</strong> Unadjusted capital losses can be carried forward for up to <strong>8 consecutive Assessment Years</strong> provided your ITR (Income Tax Return) is filed on or before the due date.</li>
+      </ol>
+
+      <h2>5. Python Automation Code: Capital Gains & Tax Loss Harvesting Analyzer</h2>
+      <p>Below is a Python script using Pandas to analyze tax liability from your Zerodha, Groww, or Upstox P&L trade history and detect tax loss harvesting opportunities:</p>
+
+      <pre><code>import pandas as pd
+import numpy as np
+
+def calculate_capital_gains_and_harvesting(pnl_df):
+    """
+    pnl_df expected columns: ['Symbol', 'Buy_Date', 'Sell_Date', 'Gain_Loss', 'Holding_Days']
+    """
+    # Categorize into STCG and LTCG
+    stcg_df = pnl_df[pnl_df['Holding_Days'] <= 365]
+    ltcg_df = pnl_df[pnl_df['Holding_Days'] > 365]
+    
+    stcg_gains = stcg_df[stcg_df['Gain_Loss'] > 0]['Gain_Loss'].sum()
+    stcg_losses = abs(stcg_df[stcg_df['Gain_Loss'] < 0]['Gain_Loss'].sum())
+    
+    ltcg_gains = ltcg_df[ltcg_df['Gain_Loss'] > 0]['Gain_Loss'].sum()
+    ltcg_losses = abs(ltcg_df[ltcg_df['Gain_Loss'] < 0]['Gain_Loss'].sum())
+    
+    # Net STCG
+    net_stcg = max(0, stcg_gains - stcg_losses)
+    stcg_tax = net_stcg * 0.20
+    
+    # Net LTCG with ₹1.25 Lakh exemption
+    net_ltcg = max(0, ltcg_gains - ltcg_losses - 125000)
+    ltcg_tax = net_ltcg * 0.125
+    
+    total_tax_estimate = stcg_tax + ltcg_tax
+    
+    print(f"--- CAPITAL GAINS TAX SUMMARY (FY 2025-26) ---")
+    print(f"Net Realized STCG: ₹{net_stcg:,.2f} | Estimated STCG Tax (20%): ₹{stcg_tax:,.2f}")
+    print(f"Net Realized LTCG: ₹{net_ltcg:,.2f} | Estimated LTCG Tax (12.5%): ₹{ltcg_tax:,.2f}")
+    print(f"Total Tax Liability: ₹{total_tax_estimate:,.2f}")
+    
+    return {
+        'stcg_tax': stcg_tax,
+        'ltcg_tax': ltcg_tax,
+        'total_tax': total_tax_estimate
+    }
+
+# Example Usage:
+# df_pnl = pd.read_csv('zerodha_tax_pnl_2026.csv')
+# calculate_capital_gains_and_harvesting(df_pnl)
+</code></pre>
+
+      <h2>6. Practical Checklist Before Filing Your ITR-2 or ITR-3</h2>
+      <ul class="list-disc pl-6 space-y-2">
+        <li>Download official <strong>Tax P&L Statements</strong> directly from your broker dashboard (Zerodha Console, Groww Tax Report, Upstox Reports).</li>
+        <li>Verify Annual Information Statement (AIS) and Form 26AS on the Income Tax e-filing portal to cross-check reported dividend income and STT transactions.</li>
+        <li>Ensure all intraday trading transactions are reported under Business Income (ITR-3) rather than Capital Gains (ITR-2).</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        question: "What is the annual LTCG tax exemption limit on equity shares in India?",
+        answer: "Long-Term Capital Gains on equity shares and equity mutual funds are exempt up to ₹1.25 Lakhs per financial year. Realized LTCG above ₹1.25 Lakhs is taxed at 12.5%."
+      },
+      {
+        question: "Can Short-Term Capital Losses (STCL) be offset against Long-Term Capital Gains (LTCG)?",
+        answer: "Yes, Short-Term Capital Losses can be set off against both STCG and LTCG. However, Long-Term Capital Losses (LTCL) can only be set off against LTCG."
+      }
+    ],
+    relatedArticles: [
+      { title: "SEBI New Index Derivatives & Algo Rules 2026", slug: "sebi-new-index-derivatives-algo-rules-2026-impact-guide" },
+      { title: "Demystifying Price-to-Earnings (P/E) Ratio", slug: "demystifying-price-to-earnings-pe-ratio" }
+    ],
+    relatedTools: [
+      { name: "CAGR Calculator", slug: "cagr-calculator" },
+      { name: "SIP Calculator", slug: "sip-calculator" }
+    ],
+    sources: [
+      "Income Tax Department of India, Tax Rates & Capital Gains Guidelines FY 2025-26.",
+      "Union Budget Equity Capital Gains Tax Notification, Ministry of Finance, Govt of India."
+    ]
   }
 ];
